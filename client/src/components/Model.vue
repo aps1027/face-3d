@@ -105,9 +105,12 @@ export default {
         this.roomHeight * this.scale,
         this.roomLength * this.scale
       );
-      const firstMaterial = new THREE.MeshBasicMaterial({
+      const firstMaterial = new THREE.MeshStandardMaterial({
         color: new THREE.Color(this.wallColorCode),
+        flatShading: true,
       });
+      firstMaterial.color.convertSRGBToLinear();
+
       let firstWall = new THREE.Mesh(firstGeometry, firstMaterial);
       firstWall.position.set(
         (this.roomWidth * this.scale) / 2,
@@ -122,9 +125,11 @@ export default {
         this.roomHeight * this.scale,
         this.roomLength * this.scale
       );
-      const secondMaterial = new THREE.MeshBasicMaterial({
+      const secondMaterial = new THREE.MeshStandardMaterial({
         color: new THREE.Color(this.wallColorCode),
+        flatShading: true,
       });
+      secondMaterial.color.convertSRGBToLinear();
       let secondWall = new THREE.Mesh(secondGeometry, secondMaterial);
       secondWall.position.set(
         -(this.roomWidth * this.scale) / 2,
@@ -139,9 +144,11 @@ export default {
         this.roomHeight * this.scale,
         this.thinkness * this.scale
       );
-      const thirdMaterial = new THREE.MeshBasicMaterial({
+      const thirdMaterial = new THREE.MeshStandardMaterial({
         color: new THREE.Color(this.wallColorCode),
+        flatShading: true,
       });
+      thirdMaterial.color.convertSRGBToLinear();
       let thirdWall = new THREE.Mesh(thirdGeometry, thirdMaterial);
       thirdWall.position.set(
         0,
@@ -156,9 +163,11 @@ export default {
         this.roomHeight * this.scale,
         this.thinkness * this.scale
       );
-      const fouthMaterial = new THREE.MeshBasicMaterial({
+      const fouthMaterial = new THREE.MeshStandardMaterial({
         color: new THREE.Color(this.wallColorCode),
+        flatShading: true,
       });
+      fouthMaterial.color.convertSRGBToLinear();
       let fouthWall = new THREE.Mesh(fouthGeometry, fouthMaterial);
       fouthWall.position.set(
         0,
@@ -178,10 +187,13 @@ export default {
         this.roomLength * this.scale
       );
       floorGeometry.rotateX(-Math.PI * 0.5);
-      const floorMaterial = new THREE.MeshBasicMaterial({
+      const floorMaterial = new THREE.MeshStandardMaterial({
         color: new THREE.Color(this.floorColorCode),
         side: THREE.DoubleSide,
+        flatShading: true,
       });
+      floorMaterial.color.convertSRGBToLinear();
+      
       let floor = new THREE.Mesh(floorGeometry, floorMaterial);
       floor.position.set(0, 0.01, 0);
       scene.add(floor);
