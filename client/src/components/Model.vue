@@ -17,9 +17,9 @@ export default {
       sceneBGColorCode: "#8fbcd4",
       floorColorCode: "#09b0fa",
       wallColorCode: "#dd5628",
-      roomLength: 20,
-      roomWidth: 12,
-      roomHeight: 7,
+      roomLength: 25,
+      roomWidth: 15,
+      roomHeight: 8,
       thinkness: 0.5,
       scale: 0.5,
     };
@@ -86,7 +86,7 @@ export default {
       const ambientLight = new THREE.HemisphereLight(
         0xddeeff, // sky color
         0x202020, // ground color
-        5 // intensity
+        2 // intensity
       );
 
       const mainLight = new THREE.DirectionalLight(0xffffff, 5);
@@ -181,6 +181,11 @@ export default {
      * This is to create floor.
      */
     createFloor() {
+      const texture = new THREE.TextureLoader().load(
+        require("../assets/images/hardwood_floor.png")
+      );
+      texture.wrapS = THREE.RepeatWrapping;
+      texture.wrapT = THREE.RepeatWrapping;
       // floor
       const floorGeometry = new THREE.PlaneGeometry(
         this.roomWidth * this.scale,
@@ -188,12 +193,12 @@ export default {
       );
       floorGeometry.rotateX(-Math.PI * 0.5);
       const floorMaterial = new THREE.MeshStandardMaterial({
-        color: new THREE.Color(this.floorColorCode),
         side: THREE.DoubleSide,
         flatShading: true,
+        map: texture,
       });
       floorMaterial.color.convertSRGBToLinear();
-      
+
       let floor = new THREE.Mesh(floorGeometry, floorMaterial);
       floor.position.set(0, 0.01, 0);
       scene.add(floor);
