@@ -16,8 +16,8 @@ export default {
     return {
       sceneBGColorCode: "#8fbcd4",
       floorColorCode: "#09b0fa",
-      wallColorCode: "#dd5628",
-      roomLength: 25,
+      wallColorCode: "#e587a0",
+      roomLength: 20,
       roomWidth: 15,
       roomHeight: 8,
       thinkness: 0.5,
@@ -89,7 +89,7 @@ export default {
         2 // intensity
       );
 
-      const mainLight = new THREE.DirectionalLight(0xffffff, 5);
+      const mainLight = new THREE.DirectionalLight(0xffffff, 2);
       mainLight.position.set(10, 10, 10);
 
       scene.add(ambientLight, mainLight);
@@ -109,9 +109,17 @@ export default {
         color: new THREE.Color(this.wallColorCode),
         flatShading: true,
       });
-      firstMaterial.color.convertSRGBToLinear();
+      const loader = new THREE.TextureLoader();
+      const materials = [
+        firstMaterial,
+        new THREE.MeshBasicMaterial({map: loader.load(require("../assets/images/wallpaper.jpeg"))}),
+        firstMaterial,
+        firstMaterial,
+        firstMaterial,
+        firstMaterial
+      ];
 
-      let firstWall = new THREE.Mesh(firstGeometry, firstMaterial);
+      let firstWall = new THREE.Mesh(firstGeometry, materials);
       firstWall.position.set(
         (this.roomWidth * this.scale) / 2,
         (this.roomHeight * this.scale) / 2,
@@ -129,7 +137,6 @@ export default {
         color: new THREE.Color(this.wallColorCode),
         flatShading: true,
       });
-      secondMaterial.color.convertSRGBToLinear();
       let secondWall = new THREE.Mesh(secondGeometry, secondMaterial);
       secondWall.position.set(
         -(this.roomWidth * this.scale) / 2,
@@ -148,7 +155,6 @@ export default {
         color: new THREE.Color(this.wallColorCode),
         flatShading: true,
       });
-      thirdMaterial.color.convertSRGBToLinear();
       let thirdWall = new THREE.Mesh(thirdGeometry, thirdMaterial);
       thirdWall.position.set(
         0,
@@ -167,7 +173,6 @@ export default {
         color: new THREE.Color(this.wallColorCode),
         flatShading: true,
       });
-      fouthMaterial.color.convertSRGBToLinear();
       let fouthWall = new THREE.Mesh(fouthGeometry, fouthMaterial);
       fouthWall.position.set(
         0,
@@ -182,7 +187,7 @@ export default {
      */
     createFloor() {
       const texture = new THREE.TextureLoader().load(
-        require("../assets/images/hardwood_floor.png")
+        require("../assets/images/light_floor.png")
       );
       texture.wrapS = THREE.RepeatWrapping;
       texture.wrapT = THREE.RepeatWrapping;
@@ -197,7 +202,6 @@ export default {
         flatShading: true,
         map: texture,
       });
-      floorMaterial.color.convertSRGBToLinear();
 
       let floor = new THREE.Mesh(floorGeometry, floorMaterial);
       floor.position.set(0, 0.01, 0);
