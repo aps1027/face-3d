@@ -113,7 +113,7 @@ export default {
     /**
      * This is to handle for selecting model.
      * @param {object} model model
-     * @return void
+     * @returns void
      */
     selectModel(model) {
       if (!model.list.length) {
@@ -123,6 +123,11 @@ export default {
         this.selectedModel = model;
       }
     },
+    /**
+     * This is to select specific model (i.e. bed or sofa).
+     * @param {object} model model
+     * @returns void
+     */
     selectSpecificModel(model) {
       this.$emit("get-model", {
         id: this.selectedModel.id,
@@ -165,8 +170,8 @@ export default {
 }
 .fix-object {
   @apply fixed;
-  top: 80%;
-  right: 10%;
+  top: 14%;
+  left: 8px;
 }
 
 .plus-btn {

@@ -1,8 +1,60 @@
 <template>
   <div>
     <SideTabBar @get-switch="getSwitch" />
+    <ObjectSideBar
+      :uploadedModelMap="uploadedModelMap"
+      @get-object="getObject"
+    />
     <Object3D :modelList="modelList" @get-model="getModel" />
     <ColorPalette :colorItemList="colorList" @get-color="getColor" />
+    <div v-if="selectedObj && !hideDesignPanel" class="panel-center panel-box">
+      <div class="text-center md:text-left">
+        <div class="font-bold">
+          <span>Adjust {{ capitalizeString(selectedObj.name) }} Model</span>
+          <button @click="clickCrossIcon" class="absolute cross-btn">
+            <span>&#10005;</span>
+          </button>
+        </div>
+        <hr />
+
+        <div class="mt-2">
+          <label for="x-axis" class="inline-block w-20">X-axis</label>
+          <input
+            class="range-bar"
+            name="x-axis"
+            type="range"
+            step="0.01"
+            :min="range.x.min"
+            :max="range.x.max"
+            v-model="adjustmentResult.position.x"
+          />
+        </div>
+        <div class="mt-2">
+          <label for="z-axis" class="inline-block w-20">Z-axis</label>
+          <input
+            class="range-bar"
+            name="z-axis"
+            type="range"
+            step="0.01"
+            :min="range.z.min"
+            :max="range.z.max"
+            v-model="adjustmentResult.position.z"
+          />
+        </div>
+        <div class="mt-2">
+          <label for="rotation" class="inline-block w-20">Rotation</label>
+          <input
+            class="range-bar"
+            name="z-axis"
+            type="range"
+            step="0.01"
+            min="-6"
+            max="6"
+            v-model="adjustmentResult.rotation.y"
+          />
+        </div>
+      </div>
+    </div>
     <div ref="container" class="w-screen h-screen"></div>
   </div>
 </template>
@@ -13,6 +65,7 @@ import GLTFLoader from "three-gltf-loader";
 import * as OrbitControls from "three-orbitcontrols";
 import SideTabBar from "./SideTabBar.vue";
 import ColorPalette from "./ColorPalette.vue";
+import ObjectSideBar from "./ObjectSideBar.vue";
 import Object3D from "./3DObject.vue";
 import constants from "../constants";
 
@@ -31,6 +84,8 @@ let door;
 let windowFrame;
 let bedModel;
 let sofaModel;
+let tableModel;
+let cabinetModel;
 
 let commonWallMaterial;
 export default {
@@ -38,6 +93,7 @@ export default {
     SideTabBar,
     ColorPalette,
     Object3D,
+    ObjectSideBar,
   },
   data() {
     return {
@@ -54,6 +110,23 @@ export default {
       colorList: [],
       modelList: constants.MODEL_LIST,
       switchItem: null,
+      uploadedModelMap: {},
+      hideDesignPanel: true,
+      selectedObj: null,
+      range: {
+        x: {
+          min: 0,
+          max: 0,
+        },
+        z: {
+          min: 0,
+          max: 0,
+        },
+      },
+      adjustmentResult: {
+        position: {},
+        rotation: {},
+      },
     };
   },
   computed: {
@@ -64,6 +137,38 @@ export default {
      */
     getSrc() {
       return (imgPath) => require("../assets/" + imgPath);
+    },
+    /**
+     * This is to capitalize string.
+     * @param {string} text text
+     * @returns capitalized string
+     */
+    capitalizeString() {
+      return (text) => text.charAt(0).toUpperCase() + text.slice(1);
+    },
+  },
+  watch: {
+    adjustmentResult: {
+      deep: true,
+      handler() {
+        if (this.selectedObj.name == "bed") {
+          bedModel.position.x = this.adjustmentResult.position.x;
+          bedModel.position.z = this.adjustmentResult.position.z;
+          bedModel.rotation.y = this.adjustmentResult.rotation.y;
+        } else if (this.selectedObj.name == "sofa") {
+          sofaModel.position.x = this.adjustmentResult.position.x;
+          sofaModel.position.z = this.adjustmentResult.position.z;
+          sofaModel.rotation.y = this.adjustmentResult.rotation.y;
+        } else if (this.selectedObj.name == "table") {
+          tableModel.position.x = this.adjustmentResult.position.x;
+          tableModel.position.z = this.adjustmentResult.position.z;
+          tableModel.rotation.y = this.adjustmentResult.rotation.y;
+        } else if (this.selectedObj.name == "cabinet") {
+          cabinetModel.position.x = this.adjustmentResult.position.x;
+          cabinetModel.position.z = this.adjustmentResult.position.z;
+          cabinetModel.rotation.y = this.adjustmentResult.rotation.y;
+        }
+      },
     },
   },
   methods: {
@@ -208,12 +313,67 @@ export default {
      * @returns void
      */
     getModel(modelItem) {
-      console.log(modelItem);
+      this.hideDesignPanel = true;
       if (modelItem.name == "bed") {
         this.uploadBedModel(modelItem.model);
-      } else if(modelItem.name == "sofa"){
+        this.addUploadedModel(modelItem);
+      } else if (modelItem.name == "sofa") {
         this.uploadSofaModel(modelItem.model);
+        this.addUploadedModel(modelItem);
+      } else if (modelItem.name == "table") {
+        this.uploadTableModel(modelItem.model);
+        this.addUploadedModel(modelItem);
+      } else if (modelItem.name == "cabinet") {
+        this.uploadCabinetModel(modelItem.model);
+        this.addUploadedModel(modelItem);
       }
+    },
+    /**
+     * This is to get selected object or model.
+     * @param {object} obj selected object
+     * @returns void
+     */
+    getObject(obj) {
+      this.selectedObj = obj;
+      if (this.selectedObj && this.selectedObj.name == "bed") {
+        this.adjustmentResult.position.x = bedModel.position.x;
+        this.adjustmentResult.position.z = bedModel.position.z;
+        this.adjustmentResult.rotation.y = bedModel.rotation.y;
+      } else if (this.selectedObj && this.selectedObj.name == "sofa") {
+        this.adjustmentResult.position.x = sofaModel.position.x;
+        this.adjustmentResult.position.z = sofaModel.position.z;
+        this.adjustmentResult.rotation.y = sofaModel.rotation.y;
+      } else if (this.selectedObj && this.selectedObj.name == "table") {
+        this.adjustmentResult.position.x = tableModel.position.x;
+        this.adjustmentResult.position.z = tableModel.position.z;
+        this.adjustmentResult.rotation.y = tableModel.rotation.y;
+      } else if (this.selectedObj && this.selectedObj.name == "cabinet") {
+        this.adjustmentResult.position.x = cabinetModel.position.x;
+        this.adjustmentResult.position.z = cabinetModel.position.z;
+        this.adjustmentResult.rotation.y = cabinetModel.rotation.y;
+      }
+
+      let range = {
+        x: {
+          min: -(this.roomWidth * this.scale) / 2,
+          max: (this.roomWidth * this.scale) / 2,
+        },
+        z: {
+          min: -(this.roomLength * this.scale) / 2,
+          max: (this.roomLength * this.scale) / 2,
+        },
+      };
+      this.range = range;
+      this.hideDesignPanel = false;
+    },
+
+    /**
+     * This is to add upload model to uploaded model map.
+     * @param {object} modelItem model item info
+     * @returns void
+     */
+    addUploadedModel(modelItem) {
+      this.uploadedModelMap[modelItem.name] = modelItem;
     },
 
     /**
@@ -224,6 +384,15 @@ export default {
     getSwitch(materialSwitch) {
       this.switchItem = materialSwitch;
       this.colorList = materialSwitch.colorList;
+    },
+
+    /**
+     * This is to handle for clicking cross icon.
+     * This will alert to parent component (i.e. Model).
+     * @returns void
+     */
+    clickCrossIcon() {
+      this.$emit("set-hidding-panel", true);
     },
     /**
      * This is initial step.
@@ -301,6 +470,11 @@ export default {
       scene.add(ambientLight, mainLight);
     },
 
+    /**
+     * This is to upload bed model.
+     * @param {object} bedItem bed item
+     * @returns void
+     */
     uploadBedModel(bedItem) {
       let tmpBedModel = scene.getObjectByName("bed");
       if (tmpBedModel) {
@@ -322,10 +496,18 @@ export default {
 
           // Set the models initial scale
           bedModel.scale.set(bedItem.size[0], bedItem.size[1], bedItem.size[2]);
-          bedModel.rotation.y = Math.PI / 2;
-          // Offset the y position a bit
-          bedModel.position.y = 0.009;
-
+          if (!tmpBedModel) {
+            bedModel.rotation.y = Math.PI / 2;
+            // Offset the y position a bit
+            bedModel.position.x = bedItem.position[0];
+            bedModel.position.y = bedItem.position[1];
+            bedModel.position.z = bedItem.position[2];
+          } else {
+            bedModel.rotation.y = tmpBedModel.rotation.y;
+            bedModel.position.x = tmpBedModel.position.x;
+            bedModel.position.y = tmpBedModel.position.y;
+            bedModel.position.z = tmpBedModel.position.z;
+          }
           // Add the model to the scene
           scene.add(bedModel);
         },
@@ -335,7 +517,11 @@ export default {
         }
       );
     },
-
+    /**
+     * This is to upload sofa model.
+     * @param {object} sofaItem sofa model
+     * @returns void
+     */
     uploadSofaModel(sofaItem) {
       let tmpSofaModel = scene.getObjectByName("sofa");
       if (tmpSofaModel) {
@@ -356,14 +542,132 @@ export default {
           });
 
           // Set the models initial scale
-          sofaModel.scale.set(sofaItem.size[0], sofaItem.size[1], sofaItem.size[2]);
-          sofaModel.rotation.y = Math.PI / 2;
-          // Offset the y position a bit
-          sofaModel.position.y = sofaItem.position[1];
-          sofaModel.position.z = sofaItem.position[2];
+          sofaModel.scale.set(
+            sofaItem.size[0],
+            sofaItem.size[1],
+            sofaItem.size[2]
+          );
+          if (!tmpSofaModel) {
+            sofaModel.rotation.y = Math.PI / 2;
+            // Offset the y position a bit
+            sofaModel.position.x = sofaItem.position[0];
+            sofaModel.position.y = sofaItem.position[1];
+            sofaModel.position.z = sofaItem.position[2];
+          } else {
+            sofaModel.rotation.y = tmpSofaModel.rotation.y;
+            sofaModel.position.x = tmpSofaModel.position.x;
+            sofaModel.position.y = tmpSofaModel.position.y;
+            sofaModel.position.z = tmpSofaModel.position.z;
+          }
 
           // Add the model to the scene
           scene.add(sofaModel);
+        },
+        undefined,
+        (error) => {
+          console.error(error);
+        }
+      );
+    },
+
+    /**
+     * This is to upload table model.
+     * @param {object} tableItem table model
+     * @returns void
+     */
+    uploadTableModel(tableItem) {
+      let tmpTableModel = scene.getObjectByName("table");
+      if (tmpTableModel) {
+        scene.remove(tmpTableModel);
+      }
+      let loaders = new GLTFLoader();
+
+      loaders.load(
+        `${this.publicPath}${tableItem.model}`,
+        (gltf) => {
+          tableModel = gltf.scene;
+          tableModel.name = "table";
+          tableModel.traverse((o) => {
+            if (o.isMesh) {
+              o.castShadow = true;
+              o.receiveShadow = true;
+            }
+          });
+
+          // Set the models initial scale
+          tableModel.scale.set(
+            tableItem.size[0],
+            tableItem.size[1],
+            tableItem.size[2]
+          );
+          if (!tmpTableModel) {
+            tableModel.rotation.y = Math.PI / 2;
+            // Offset the y position a bit
+            tableModel.position.x = tableItem.position[0];
+            tableModel.position.y = tableItem.position[1];
+            tableModel.position.z = tableItem.position[2];
+          } else {
+            tableModel.rotation.y = tmpTableModel.rotation.y;
+            tableModel.position.x = tmpTableModel.position.x;
+            tableModel.position.y = tmpTableModel.position.y;
+            tableModel.position.z = tmpTableModel.position.z;
+          }
+
+          // Add the model to the scene
+          scene.add(tableModel);
+        },
+        undefined,
+        (error) => {
+          console.error(error);
+        }
+      );
+    },
+
+    /**
+     * This is to upload cabinet model.
+     * @param {object} cabinetItem cabinet model
+     * @returns void
+     */
+    uploadCabinetModel(cabinetItem) {
+      let tmpCabinetModel = scene.getObjectByName("cabinet");
+      if (tmpCabinetModel) {
+        scene.remove(tmpCabinetModel);
+      }
+      let loaders = new GLTFLoader();
+
+      loaders.load(
+        `${this.publicPath}${cabinetItem.model}`,
+        (gltf) => {
+          cabinetModel = gltf.scene;
+          cabinetModel.name = "cabinet";
+          cabinetModel.traverse((o) => {
+            if (o.isMesh) {
+              o.castShadow = true;
+              o.receiveShadow = true;
+            }
+          });
+
+          // Set the models initial scale
+          cabinetModel.scale.set(
+            cabinetItem.size[0],
+            cabinetItem.size[1],
+            cabinetItem.size[2]
+          );
+          if (!tmpCabinetModel) {
+            cabinetModel.rotation.y = Math.PI / 2;
+            // Offset the y position a bit
+            cabinetModel.position.x = cabinetItem.position[0];
+            cabinetModel.position.y = cabinetItem.position[1];
+            cabinetModel.position.z = cabinetItem.position[2];
+          } else {
+            cabinetModel.rotation.y = tmpCabinetModel.rotation.y;
+            cabinetModel.position.x = tmpCabinetModel.position.x;
+            cabinetModel.position.y = tmpCabinetModel.position.y;
+            cabinetModel.position.z = tmpCabinetModel.position.z;
+          }
+
+          // Add the model to the scene
+          scene.add(cabinetModel);
         },
         undefined,
         (error) => {
@@ -531,3 +835,30 @@ export default {
   },
 };
 </script>
+<style scoped>
+.range-bar {
+  width: 10rem;
+}
+.panel-center {
+  @apply absolute;
+  right: 0px;
+  bottom: 5px;
+}
+
+.panel-box {
+  width: 19rem;
+  @apply p-3;
+  @apply h-40;
+  @apply bg-white;
+  @apply opacity-75;
+}
+
+.cross-btn {
+  right: 10px;
+  top: 7px;
+  outline: none;
+}
+.cross-btn:hover {
+  @apply text-teal-600;
+}
+</style>
