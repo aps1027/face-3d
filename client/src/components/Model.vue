@@ -1,7 +1,7 @@
 <template>
   <div>
     <SideTabBar @get-switch="getSwitch" />
-    <Object3D />
+    <Object3D :modelList="modelList" @get-model="getModel" />
     <ColorPalette :colorItemList="colorList" @get-color="getColor" />
     <div ref="container" class="w-screen h-screen"></div>
   </div>
@@ -9,10 +9,12 @@
 
 <script>
 import * as THREE from "three";
+import GLTFLoader from "three-gltf-loader";
 import * as OrbitControls from "three-orbitcontrols";
 import SideTabBar from "./SideTabBar.vue";
 import ColorPalette from "./ColorPalette.vue";
 import Object3D from "./3DObject.vue";
+import constants from "../constants";
 
 let container;
 let scene;
@@ -27,6 +29,8 @@ let fouthWall;
 let floor;
 let door;
 let windowFrame;
+let bedModel;
+let sofaModel;
 
 let commonWallMaterial;
 export default {
@@ -37,6 +41,7 @@ export default {
   },
   data() {
     return {
+      publicPath: process.env.BASE_URL,
       sceneBGColorCode: "#efefef",
       wallColorCode: "#ffffff",
       floorColorCode: "#ffffff",
@@ -47,6 +52,7 @@ export default {
       thinkness: 0.5,
       scale: 0.5,
       colorList: [],
+      modelList: constants.MODEL_LIST,
       switchItem: null,
     };
   },
@@ -197,6 +203,20 @@ export default {
     },
 
     /**
+     * This is to get specific model (i.e. bed, sofa, etc).
+     * @param {object} modelItem specific model
+     * @returns void
+     */
+    getModel(modelItem) {
+      console.log(modelItem);
+      if (modelItem.name == "bed") {
+        this.uploadBedModel(modelItem.model);
+      } else if(modelItem.name == "sofa"){
+        this.uploadSofaModel(modelItem.model);
+      }
+    },
+
+    /**
      * This is to get user selected switch for material items (i.e. wall, floor, door, window),
      * @param {object} materialSwitch material switch
      * @returns void
@@ -279,6 +299,77 @@ export default {
       mainLight.position.set(10, 10, 10);
 
       scene.add(ambientLight, mainLight);
+    },
+
+    uploadBedModel(bedItem) {
+      let tmpBedModel = scene.getObjectByName("bed");
+      if (tmpBedModel) {
+        scene.remove(tmpBedModel);
+      }
+      let loaders = new GLTFLoader();
+
+      loaders.load(
+        `${this.publicPath}${bedItem.model}`,
+        (gltf) => {
+          bedModel = gltf.scene;
+          bedModel.name = "bed";
+          bedModel.traverse((o) => {
+            if (o.isMesh) {
+              o.castShadow = true;
+              o.receiveShadow = true;
+            }
+          });
+
+          // Set the models initial scale
+          bedModel.scale.set(bedItem.size[0], bedItem.size[1], bedItem.size[2]);
+          bedModel.rotation.y = Math.PI / 2;
+          // Offset the y position a bit
+          bedModel.position.y = 0.009;
+
+          // Add the model to the scene
+          scene.add(bedModel);
+        },
+        undefined,
+        (error) => {
+          console.error(error);
+        }
+      );
+    },
+
+    uploadSofaModel(sofaItem) {
+      let tmpSofaModel = scene.getObjectByName("sofa");
+      if (tmpSofaModel) {
+        scene.remove(tmpSofaModel);
+      }
+      let loaders = new GLTFLoader();
+
+      loaders.load(
+        `${this.publicPath}${sofaItem.model}`,
+        (gltf) => {
+          sofaModel = gltf.scene;
+          sofaModel.name = "sofa";
+          sofaModel.traverse((o) => {
+            if (o.isMesh) {
+              o.castShadow = true;
+              o.receiveShadow = true;
+            }
+          });
+
+          // Set the models initial scale
+          sofaModel.scale.set(sofaItem.size[0], sofaItem.size[1], sofaItem.size[2]);
+          sofaModel.rotation.y = Math.PI / 2;
+          // Offset the y position a bit
+          sofaModel.position.y = sofaItem.position[1];
+          sofaModel.position.z = sofaItem.position[2];
+
+          // Add the model to the scene
+          scene.add(sofaModel);
+        },
+        undefined,
+        (error) => {
+          console.error(error);
+        }
+      );
     },
 
     /**

@@ -141,6 +141,64 @@ const constants = {
       ],
     },
   ],
+  MODEL_LIST: [
+    {
+      id: 1,
+      name: "bed",
+      icon: "images/icons/bed_icon.png",
+      list: [
+        {
+          id: 1,
+          image: "images/beds/bed_1.png",
+          name: "bed 1",
+          model: "models/beds/bed_1.glb",
+          size: [1.5, 1.5, 1.5],
+        },
+        {
+          id: 2,
+          image: "images/beds/bed_2.png",
+          name: "bed 2",
+          model: "models/beds/bed_2.glb",
+          size: [1.5, 1.5, 1.5],
+        },
+      ],
+    },
+    {
+      id: 2,
+      name: "sofa",
+      icon: "images/icons/sofa_icon.png",
+      list: [
+        {
+          id: 1,
+          image: "images/sofas/sofa_1.png",
+          name: "sofa 1",
+          model: "models/sofas/sofa_1.glb",
+          size: [0.1, 0.1, 0.1],
+          position: [0, 0.2, 3.7],
+        },
+        {
+          id: 2,
+          image: "images/sofas/sofa_2.png",
+          name: "sofa 2",
+          model: "models/sofas/sofa_2.glb",
+          size: [1, 1, 1],
+          position: [0, 0.005, 3],
+        },
+      ],
+    },
+    {
+      id: 3,
+      name: "table",
+      icon: "",
+      list: [],
+    },
+    {
+      id: 4,
+      name: "cabinet",
+      icon: "",
+      list: [],
+    },
+  ],
 };
 
 export default constants;
