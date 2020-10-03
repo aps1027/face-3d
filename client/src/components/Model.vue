@@ -6,21 +6,29 @@
       @get-object="getObject"
     />
     <Object3D :modelList="modelList" @get-model="getModel" />
-    <ColorPalette :colorItemList="colorList" @get-color="getColor" />
-    <div v-if="selectedObj && !hideDesignPanel" class="panel-center panel-box">
+    <ColorPalette
+      v-if="this.switchItem"
+      :colorItemList="colorList"
+      :showFullImage="showFullImage"
+      @get-color="getColor"
+    />
+    <div
+      v-if="selectedObj && !hideAdjustmentPanel"
+      class="panel-right panel-box"
+    >
       <div class="text-center md:text-left">
         <div class="font-bold">
           <span>Adjust {{ capitalizeString(selectedObj.name) }} Model</span>
-          <button @click="clickCrossIcon" class="absolute cross-btn">
+          <button @click="clickAdjustmentCrossIcon" class="absolute cross-btn">
             <span>&#10005;</span>
           </button>
         </div>
         <hr />
 
-        <div class="mt-2">
-          <label for="x-axis" class="inline-block w-20">X-axis</label>
+        <div class="mt-1 flex items-center">
+          <label for="x-axis" class="inline-block w-16">X-axis</label>
           <input
-            class="range-bar"
+            class="range-bar mx-5"
             name="x-axis"
             type="range"
             step="0.01"
@@ -29,10 +37,10 @@
             v-model="adjustmentResult.position.x"
           />
         </div>
-        <div class="mt-2">
-          <label for="z-axis" class="inline-block w-20">Z-axis</label>
+        <div class="mt-1">
+          <label for="z-axis" class="inline-block w-16">Z-axis</label>
           <input
-            class="range-bar"
+            class="range-bar mx-5"
             name="z-axis"
             type="range"
             step="0.01"
@@ -41,10 +49,10 @@
             v-model="adjustmentResult.position.z"
           />
         </div>
-        <div class="mt-2">
-          <label for="rotation" class="inline-block w-20">Rotation</label>
+        <div class="mt-1">
+          <label for="rotation" class="inline-block w-16">Rotation</label>
           <input
-            class="range-bar"
+            class="range-bar mx-5"
             name="z-axis"
             type="range"
             step="0.01"
@@ -55,7 +63,41 @@
         </div>
       </div>
     </div>
-    <div ref="container" class="w-screen h-screen"></div>
+    <div v-if="selectedObj && !hideColorPanel" class="panel-left panel-box">
+      <div class="text-center md:text-left">
+        <div class="font-bold">
+          <span
+            >Customize {{ capitalizeString(selectedObj.name) }} Model
+            Design</span
+          >
+          <button @click="clickColorCrossIcon" class="absolute cross-btn">
+            <span>&#10005;</span>
+          </button>
+        </div>
+        <hr />
+        <div
+          v-for="design in modelDesign"
+          :key="design.name"
+          class="mt-1 flex items-center"
+          style="height: 25px"
+        >
+          <label class="inline-block w-16">{{
+            capitalizeString(design.name)
+          }}</label>
+          <div class="inline-block">
+            <div
+              v-for="color in design.colorList"
+              :key="color.id"
+              class="color-btn"
+              @click="changeModelColor(design, color)"
+            >
+              <img class="h-full" :src="getSrc(color.texture)" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div ref="container" class="w-screen h-screen min-size"></div>
   </div>
 </template>
 
@@ -86,6 +128,7 @@ let bedModel;
 let sofaModel;
 let tableModel;
 let cabinetModel;
+let chairModel;
 
 let commonWallMaterial;
 export default {
@@ -111,7 +154,8 @@ export default {
       modelList: constants.MODEL_LIST,
       switchItem: null,
       uploadedModelMap: {},
-      hideDesignPanel: true,
+      hideAdjustmentPanel: true,
+      hideColorPanel: true,
       selectedObj: null,
       range: {
         x: {
@@ -127,9 +171,17 @@ export default {
         position: {},
         rotation: {},
       },
+      modelDesign: [],
     };
   },
   computed: {
+    /**
+     * This is to show full image in color palette component.
+     * @returns true or false
+     */
+    showFullImage() {
+      return ["window", "door"].includes(this.switchItem.name);
+    },
     /**
      * This is to get image source.
      * @param {string} imgPath image path
@@ -167,11 +219,59 @@ export default {
           cabinetModel.position.x = this.adjustmentResult.position.x;
           cabinetModel.position.z = this.adjustmentResult.position.z;
           cabinetModel.rotation.y = this.adjustmentResult.rotation.y;
+        } else if (this.selectedObj.name == "chair") {
+          chairModel.position.x = this.adjustmentResult.position.x;
+          chairModel.position.z = this.adjustmentResult.position.z;
+          chairModel.rotation.y = this.adjustmentResult.rotation.y;
         }
       },
     },
   },
   methods: {
+    /**
+     * This is to change model color or design.
+     * @param {object} design design object including mesh names and color list
+     * @param {object} color specific color to change
+     * @returns void
+     */
+    changeModelColor(design, color) {
+      if (this.selectedObj.name == "bed") {
+        this.setModelMaterial(bedModel, design.meshNameList, color);
+      } else if (this.selectedObj.name == "sofa") {
+        this.setModelMaterial(sofaModel, design.meshNameList, color);
+      } else if (this.selectedObj.name == "table") {
+        this.setModelMaterial(tableModel, design.meshNameList, color);
+      } else if (this.selectedObj.name == "cabinet") {
+        this.setModelMaterial(cabinetModel, design.meshNameList, color);
+      } else if (this.selectedObj.name == "chair") {
+        this.setModelMaterial(chairModel, design.meshNameList, color);
+      }
+    },
+    /**
+     * This is to set new model material.
+     * @param {object} model specific model to change design
+     * @param {object} meshNameList mesh names
+     * @param {object} color specific color to change
+     * @returns void
+     */
+    setModelMaterial(model, meshNameList, color) {
+      model.traverse((o) => {
+        let texture = new THREE.TextureLoader().load(
+          this.getSrc(color.texture)
+        );
+        texture.wrapS = THREE.RepeatWrapping;
+        texture.wrapT = THREE.RepeatWrapping;
+        texture.repeat.set(color.size[0], color.size[1]);
+        let material = new THREE.MeshStandardMaterial({
+          flatShading: true,
+          map: texture,
+        });
+
+        if (o.isMesh && meshNameList.includes(o.name)) {
+          o.material = material;
+        }
+      });
+    },
     /**
      * This is to change window design.
      * @param {object} windowItem window item object
@@ -313,7 +413,8 @@ export default {
      * @returns void
      */
     getModel(modelItem) {
-      this.hideDesignPanel = true;
+      this.hideAdjustmentPanel = true;
+      this.hideColorPanel = true;
       if (modelItem.name == "bed") {
         this.uploadBedModel(modelItem.model);
         this.addUploadedModel(modelItem);
@@ -325,6 +426,9 @@ export default {
         this.addUploadedModel(modelItem);
       } else if (modelItem.name == "cabinet") {
         this.uploadCabinetModel(modelItem.model);
+        this.addUploadedModel(modelItem);
+      } else if (modelItem.name == "chair") {
+        this.uploadChairModel(modelItem.model);
         this.addUploadedModel(modelItem);
       }
     },
@@ -351,6 +455,10 @@ export default {
         this.adjustmentResult.position.x = cabinetModel.position.x;
         this.adjustmentResult.position.z = cabinetModel.position.z;
         this.adjustmentResult.rotation.y = cabinetModel.rotation.y;
+      } else if (this.selectedObj && this.selectedObj.name == "chair") {
+        this.adjustmentResult.position.x = chairModel.position.x;
+        this.adjustmentResult.position.z = chairModel.position.z;
+        this.adjustmentResult.rotation.y = chairModel.rotation.y;
       }
 
       let range = {
@@ -364,7 +472,11 @@ export default {
         },
       };
       this.range = range;
-      this.hideDesignPanel = false;
+
+      // color design panel
+      this.modelDesign = this.selectedObj.model.color;
+      this.hideAdjustmentPanel = false;
+      this.hideColorPanel = false;
     },
 
     /**
@@ -387,13 +499,21 @@ export default {
     },
 
     /**
-     * This is to handle for clicking cross icon.
-     * This will alert to parent component (i.e. Model).
+     * This is to handle for clicking adjustment cross icon.
      * @returns void
      */
-    clickCrossIcon() {
-      this.$emit("set-hidding-panel", true);
+    clickAdjustmentCrossIcon() {
+      this.hideAdjustmentPanel = true;
     },
+
+    /**
+     * This is to handle for clicking Color cross icon.
+     * @returns void
+     */
+    clickColorCrossIcon() {
+      this.hideColorPanel = true;
+    },
+
     /**
      * This is initial step.
      * @returns void
@@ -505,7 +625,7 @@ export default {
           } else {
             bedModel.rotation.y = tmpBedModel.rotation.y;
             bedModel.position.x = tmpBedModel.position.x;
-            bedModel.position.y = tmpBedModel.position.y;
+            bedModel.position.y = bedItem.position[1];
             bedModel.position.z = tmpBedModel.position.z;
           }
           // Add the model to the scene
@@ -556,7 +676,7 @@ export default {
           } else {
             sofaModel.rotation.y = tmpSofaModel.rotation.y;
             sofaModel.position.x = tmpSofaModel.position.x;
-            sofaModel.position.y = tmpSofaModel.position.y;
+            sofaModel.position.y = sofaItem.position[1];
             sofaModel.position.z = tmpSofaModel.position.z;
           }
 
@@ -609,7 +729,7 @@ export default {
           } else {
             tableModel.rotation.y = tmpTableModel.rotation.y;
             tableModel.position.x = tmpTableModel.position.x;
-            tableModel.position.y = tmpTableModel.position.y;
+            tableModel.position.y = tableItem.position[1];
             tableModel.position.z = tmpTableModel.position.z;
           }
 
@@ -642,8 +762,12 @@ export default {
           cabinetModel.name = "cabinet";
           cabinetModel.traverse((o) => {
             if (o.isMesh) {
-              o.castShadow = true;
-              o.receiveShadow = true;
+              if (o.name == "Plane") {
+                o.visible = false;
+              } else {
+                o.castShadow = true;
+                o.receiveShadow = true;
+              }
             }
           });
 
@@ -662,12 +786,66 @@ export default {
           } else {
             cabinetModel.rotation.y = tmpCabinetModel.rotation.y;
             cabinetModel.position.x = tmpCabinetModel.position.x;
-            cabinetModel.position.y = tmpCabinetModel.position.y;
+            cabinetModel.position.y = cabinetItem.position[1];
             cabinetModel.position.z = tmpCabinetModel.position.z;
           }
 
           // Add the model to the scene
           scene.add(cabinetModel);
+        },
+        undefined,
+        (error) => {
+          console.error(error);
+        }
+      );
+    },
+
+    /**
+     * This is to upload chair model.
+     * @param {object} chairItem chair model
+     * @returns void
+     */
+    uploadChairModel(chairItem) {
+      let tmpChairModel = scene.getObjectByName("chair");
+      if (tmpChairModel) {
+        scene.remove(tmpChairModel);
+      }
+      let loaders = new GLTFLoader();
+
+      loaders.load(
+        `${this.publicPath}${chairItem.model}`,
+        (gltf) => {
+          chairModel = gltf.scene;
+          chairModel.name = "chair";
+          chairModel.traverse((o) => {
+            if (o.isMesh) {
+              console.log(o.name);
+              o.castShadow = true;
+              o.receiveShadow = true;
+            }
+          });
+
+          // Set the models initial scale
+          chairModel.scale.set(
+            chairItem.size[0],
+            chairItem.size[1],
+            chairItem.size[2]
+          );
+          if (!tmpChairModel) {
+            chairModel.rotation.y = Math.PI / 2;
+            // Offset the y position a bit
+            chairModel.position.x = chairItem.position[0];
+            chairModel.position.y = chairItem.position[1];
+            chairModel.position.z = chairItem.position[2];
+          } else {
+            chairModel.rotation.y = tmpChairModel.rotation.y;
+            chairModel.position.x = tmpChairModel.position.x;
+            chairModel.position.y = chairItem.position[1];
+            chairModel.position.z = tmpChairModel.position.z;
+          }
+
+          // Add the model to the scene
+          scene.add(chairModel);
         },
         undefined,
         (error) => {
@@ -835,22 +1013,25 @@ export default {
   },
 };
 </script>
-<style scoped>
+<style scoped lang="postcss">
 .range-bar {
   width: 10rem;
 }
-.panel-center {
+.panel-right {
   @apply absolute;
-  right: 0px;
-  bottom: 5px;
+  top: 5rem;
+  right: 90px;
+}
+.panel-left {
+  @apply absolute;
+  top: 5rem;
+  left: 90px;
 }
 
 .panel-box {
-  width: 19rem;
-  @apply p-3;
-  @apply h-40;
-  @apply bg-white;
-  @apply opacity-75;
+  width: 18rem;
+  min-height: 10rem;
+  @apply p-3 h-40 bg-white opacity-75;
 }
 
 .cross-btn {
@@ -860,5 +1041,29 @@ export default {
 }
 .cross-btn:hover {
   @apply text-teal-600;
+}
+
+.color-btn {
+  @apply cursor-pointer inline-block w-6 h-6 object-cover border-solid border-2 border-white;
+}
+.color-btn:hover {
+  @apply border-teal-600;
+}
+.min-size {
+  min-width: 360px;
+  min-height: 640px;
+}
+
+@media (min-width: 300px) and (max-width: 639px) {
+  .panel-left {
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 6.5rem;
+    top: auto;
+  }
+  .panel-right {
+    right: 50%;
+    transform: translateX(50%);
+  }
 }
 </style>

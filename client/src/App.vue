@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="min-size">
     <Nav />
     <Model />
   </div>
@@ -17,5 +17,9 @@ export default {
   },
 };
 </script>
-<style>
+<style scoped lang="postcss">
+.min-size {
+  min-width: 360px;
+  min-height: 640px;
+}
 </style>

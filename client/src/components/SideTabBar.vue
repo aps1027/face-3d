@@ -1,9 +1,9 @@
 <template>
-  <div class="space-y-1 bar-center">
+  <div class="space-y-1 bar-center top-space">
     <div
       v-for="materialItem in materialItemList"
       :key="materialItem.id"
-      class="bar-btn"
+      class="xs:w-10 xs:h-10 bar-btn w-20 h-20"
       @click="clickSwitch(materialItem)"
     >
       <img class="bar-img" :src="getSrc(materialItem.icon)" />
@@ -43,28 +43,28 @@ export default {
   },
 };
 </script>
-<style scoped>
+<style scoped lang="postcss">
 .bar-center {
   @apply absolute;
-  top: 50%;
-  transform: translateY(-50%);
 }
+
+.top-space {
+  top: 10rem;
+}
+
 .bar-img {
-  @apply w-full;
-  @apply h-full;
-  @apply object-contain;
+  @apply w-full h-full object-contain;
 }
 .bar-btn {
-  @apply cursor-pointer;
-  @apply border-solid;
-  @apply border-2;
-  @apply border-white;
-  @apply bg-white;
-  @apply w-20;
-  @apply h-20;
+  @apply cursor-pointer border-solid border-2 border-white bg-white;
 }
 .bar-btn:hover {
-  @apply border-teal-600;
-  @apply bg-gray-400;
+  @apply border-teal-600 bg-gray-400;
+}
+
+@media (min-width: 300px) and (max-width: 639px) {
+  .top-space {
+    top: 7.5rem;
+  }
 }
 </style>

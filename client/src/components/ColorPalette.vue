@@ -1,15 +1,16 @@
 <template>
-  <div class="space-x-1 bar-center">
+  <div class="absolute space-x-1 bottom-0 bar-center">
     <div
       v-for="colorItem in colorItemList"
       :key="colorItem.id"
-      class="inline-block bar-btn"
+      class="xs:w-10 xs:h-10 inline-block bar-btn w-20 h-20"
       :style="[!colorItem.texture ? { background: `#${colorItem.color}` } : {}]"
       @click="clickColor(colorItem)"
     >
       <img
         v-if="colorItem.texture"
         class="bar-img"
+        :class="showFullImage ? 'object-contain' : 'object-cover'"
         :src="getSrc(colorItem.texture)"
       />
     </div>
@@ -18,7 +19,7 @@
 <script>
 export default {
   name: "ColorPalette",
-  props: ["colorItemList"],
+  props: ["colorItemList", "showFullImage"],
   computed: {
     /**
      * This is to get image source.
@@ -43,29 +44,19 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="postcss">
 .bar-center {
-  @apply absolute;
-  @apply bottom-0;
   left: 50%;
   transform: translateX(-50%);
 }
 .bar-img {
-  @apply w-full;
-  @apply h-full;
-  @apply object-cover;
+  @apply w-full h-full;
 }
 .bar-btn {
-  @apply cursor-pointer;
-  @apply border-solid;
-  @apply border-2;
-  @apply border-white;
-  @apply bg-white;
-  @apply w-20;
-  @apply h-20;
+  margin: 0px 2px;
+  @apply cursor-pointer border-solid border-2 border-white bg-white;
 }
 .bar-btn:hover {
-  @apply border-teal-600;
-  @apply bg-gray-400;
+  @apply border-teal-600 bg-gray-400;
 }
 </style>

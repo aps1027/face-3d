@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "core-js": "^3.6.5",
+    "postcss-preset-env": "^6.7.0",
     "tailwindcss": "^1.8.10",
     "three": "^0.120.1",
     "three-gltf-loader": "^1.111.0",

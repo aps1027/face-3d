@@ -1,6 +1,9 @@
 <template>
   <div>
-    <div class="fix-object plus-btn" @click="closeModal = false">
+    <div
+      class="xs:w-8 xs:h-8 xs:p-1 fix-object plus-btn w-16 h-16 p-3"
+      @click="closeModal = false"
+    >
       <img class="dialog-img" :src="getSrc('images/icons/plus_icon.png')" />
     </div>
     <main
@@ -141,53 +144,38 @@ export default {
   },
 };
 </script>
-<style scoped>
+<style scoped lang="postcss">
 .dialog-img {
-  @apply w-full;
-  @apply h-full;
-  @apply object-contain;
+  @apply w-full h-full object-contain;
 }
 .model-item,
 .dialog-item {
-  @apply m-2;
-  @apply inline-block;
-  @apply cursor-pointer;
-  @apply border-solid;
-  @apply border-2;
-  @apply border-white;
-  @apply bg-white;
-  @apply w-20;
-  @apply h-20;
+  @apply m-2 inline-block cursor-pointer border-solid border-2 border-white bg-white w-20 h-20;
 }
 
 .dialog-item:hover {
-  @apply border-teal-600;
-  @apply bg-gray-400;
+  @apply border-teal-600 bg-gray-400;
 }
 
 .model-item:hover {
   @apply border-teal-600;
 }
 .fix-object {
-  @apply fixed;
-  top: 14%;
+  @apply absolute;
+  top: 5rem;
   left: 8px;
 }
 
 .plus-btn {
-  @apply p-3;
-  @apply cursor-pointer;
-  @apply border-solid;
-  @apply border-2;
-  @apply border-white;
-  @apply bg-white;
-  @apply w-16;
-  @apply h-16;
-  @apply rounded-full;
+  @apply cursor-pointer border-solid border-2 border-white bg-white rounded-full;
 }
 
 .plus-btn:hover {
-  @apply border-teal-600;
-  @apply bg-gray-400;
+  @apply border-teal-600 bg-gray-400;
+}
+@media (min-width: 300px) and (max-width: 639px) {
+  .fix-object {
+    left: 5px;
+  }
 }
 </style>
