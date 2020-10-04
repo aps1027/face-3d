@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ProgressLoading v-if="progress != 100" :progress="progress" />
+    <ProgressLoading v-if="showLoading" />
     <SideTabBar @get-switch="getSwitch" />
     <ObjectSideBar
       :uploadedModelMap="uploadedModelMap"
@@ -175,7 +175,7 @@ export default {
         rotation: {},
       },
       modelDesign: [],
-      progress: 100,
+      showLoading: false,
     };
   },
   computed: {
@@ -600,6 +600,7 @@ export default {
      * @returns void
      */
     uploadBedModel(bedItem) {
+      this.showLoading = true;
       let tmpBedModel = scene.getObjectByName("bed");
       if (tmpBedModel) {
         scene.remove(tmpBedModel);
@@ -634,11 +635,9 @@ export default {
           }
           // Add the model to the scene
           scene.add(bedModel);
+          this.showLoading = false;
         },
-        (xhr) => {
-          this.progress = ((xhr.loaded / xhr.total) * 100).toFixed(1);
-          console.log(this.progress + "% loaded");
-        },
+        undefined,
         (error) => {
           console.error(error);
         }
@@ -650,6 +649,7 @@ export default {
      * @returns void
      */
     uploadSofaModel(sofaItem) {
+      this.showLoading = true;
       let tmpSofaModel = scene.getObjectByName("sofa");
       if (tmpSofaModel) {
         scene.remove(tmpSofaModel);
@@ -689,11 +689,9 @@ export default {
 
           // Add the model to the scene
           scene.add(sofaModel);
+          this.showLoading = false;
         },
-        (xhr) => {
-          this.progress = ((xhr.loaded / xhr.total) * 100).toFixed(1);
-          console.log(this.progress + "% loaded");
-        },
+        undefined,
         (error) => {
           console.error(error);
         }
@@ -706,6 +704,7 @@ export default {
      * @returns void
      */
     uploadTableModel(tableItem) {
+      this.showLoading = true;
       let tmpTableModel = scene.getObjectByName("table");
       if (tmpTableModel) {
         scene.remove(tmpTableModel);
@@ -745,11 +744,9 @@ export default {
 
           // Add the model to the scene
           scene.add(tableModel);
+          this.showLoading = false;
         },
-        (xhr) => {
-          this.progress = ((xhr.loaded / xhr.total) * 100).toFixed(1);
-          console.log(this.progress + "% loaded");
-        },
+        undefined,
         (error) => {
           console.error(error);
         }
@@ -762,6 +759,7 @@ export default {
      * @returns void
      */
     uploadCabinetModel(cabinetItem) {
+      this.showLoading = true;
       let tmpCabinetModel = scene.getObjectByName("cabinet");
       if (tmpCabinetModel) {
         scene.remove(tmpCabinetModel);
@@ -805,11 +803,9 @@ export default {
 
           // Add the model to the scene
           scene.add(cabinetModel);
+          this.showLoading = false;
         },
-        (xhr) => {
-          this.progress = ((xhr.loaded / xhr.total) * 100).toFixed(1);
-          console.log(this.progress + "% loaded");
-        },
+        undefined,
         (error) => {
           console.error(error);
         }
@@ -822,6 +818,7 @@ export default {
      * @returns void
      */
     uploadChairModel(chairItem) {
+      this.showLoading = true;
       let tmpChairModel = scene.getObjectByName("chair");
       if (tmpChairModel) {
         scene.remove(tmpChairModel);
@@ -862,11 +859,9 @@ export default {
 
           // Add the model to the scene
           scene.add(chairModel);
+          this.showLoading = false;
         },
-        (xhr) => {
-          this.progress = ((xhr.loaded / xhr.total) * 100).toFixed(1);
-          console.log(this.progress + "% loaded");
-        },
+        undefined,
         (error) => {
           console.error(error);
         }
