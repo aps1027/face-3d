@@ -1,5 +1,6 @@
 <template>
   <div>
+    <ProgressLoading v-if="progress != 100" :progress="progress" />
     <SideTabBar @get-switch="getSwitch" />
     <ObjectSideBar
       :uploadedModelMap="uploadedModelMap"
@@ -109,6 +110,7 @@ import SideTabBar from "./SideTabBar.vue";
 import ColorPalette from "./ColorPalette.vue";
 import ObjectSideBar from "./ObjectSideBar.vue";
 import Object3D from "./3DObject.vue";
+import ProgressLoading from "./ProgressLoading.vue";
 import constants from "../constants";
 
 let container;
@@ -137,6 +139,7 @@ export default {
     ColorPalette,
     Object3D,
     ObjectSideBar,
+    ProgressLoading,
   },
   data() {
     return {
@@ -172,6 +175,7 @@ export default {
         rotation: {},
       },
       modelDesign: [],
+      progress: 100,
     };
   },
   computed: {
@@ -631,7 +635,10 @@ export default {
           // Add the model to the scene
           scene.add(bedModel);
         },
-        undefined,
+        (xhr) => {
+          this.progress = ((xhr.loaded / xhr.total) * 100).toFixed(1);
+          console.log(this.progress + "% loaded");
+        },
         (error) => {
           console.error(error);
         }
@@ -683,7 +690,10 @@ export default {
           // Add the model to the scene
           scene.add(sofaModel);
         },
-        undefined,
+        (xhr) => {
+          this.progress = ((xhr.loaded / xhr.total) * 100).toFixed(1);
+          console.log(this.progress + "% loaded");
+        },
         (error) => {
           console.error(error);
         }
@@ -736,7 +746,10 @@ export default {
           // Add the model to the scene
           scene.add(tableModel);
         },
-        undefined,
+        (xhr) => {
+          this.progress = ((xhr.loaded / xhr.total) * 100).toFixed(1);
+          console.log(this.progress + "% loaded");
+        },
         (error) => {
           console.error(error);
         }
@@ -793,7 +806,10 @@ export default {
           // Add the model to the scene
           scene.add(cabinetModel);
         },
-        undefined,
+        (xhr) => {
+          this.progress = ((xhr.loaded / xhr.total) * 100).toFixed(1);
+          console.log(this.progress + "% loaded");
+        },
         (error) => {
           console.error(error);
         }
@@ -847,7 +863,10 @@ export default {
           // Add the model to the scene
           scene.add(chairModel);
         },
-        undefined,
+        (xhr) => {
+          this.progress = ((xhr.loaded / xhr.total) * 100).toFixed(1);
+          console.log(this.progress + "% loaded");
+        },
         (error) => {
           console.error(error);
         }
