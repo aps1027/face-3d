@@ -104,8 +104,8 @@
 
 <script>
 import * as THREE from "three";
-import GLTFLoader from "three-gltf-loader";
-import * as OrbitControls from "three-orbitcontrols";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import SideTabBar from "./SideTabBar.vue";
 import ColorPalette from "./ColorPalette.vue";
 import ObjectSideBar from "./ObjectSideBar.vue";
