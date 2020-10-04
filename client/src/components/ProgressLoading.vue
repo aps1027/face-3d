@@ -1,16 +1,11 @@
 <template>
   <div class="w-screen h-screen absolute z-50 bg-gray-500 opacity-50">
-    <div
-      class="loader"
-    >
-      {{ progress }}%
-    </div>
+    <div class="loader">Loading...</div>
   </div>
 </template>
 <script>
 export default {
   name: "ProgressLoading",
-  props: ["progress"],
 };
 </script>
 <style scoped lang="postcss">
@@ -24,7 +19,7 @@ export default {
   height: 100px;
   text-align: center;
   border-radius: 50px;
-  padding: 30px 0px;
-  font-size: 26px;
+  padding: 36px 0px;
+  font-size: 18px;
 }
 </style>
