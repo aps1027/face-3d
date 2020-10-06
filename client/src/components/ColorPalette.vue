@@ -12,6 +12,7 @@
         class="bar-img"
         :class="showFullImage ? 'object-contain' : 'object-cover'"
         :src="getSrc(colorItem.texture)"
+        :alt="colorItem.name"
       />
     </div>
   </div>

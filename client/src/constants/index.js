@@ -10,27 +10,34 @@ const constants = {
       icon: "images/icons/wall_icon.png",
       colorList: [
         {
+          name: "3D Room Rock Wallpaper",
           texture: "images/wallpapers/wallpaper.jpeg",
         },
         {
+          name: "3D Room Normal Wallpaper",
           texture: "images/wallpapers/wallpaper_2.jpeg",
         },
         {
+          name: "3D Room Wallpaper Color 1",
           texture: "images/wallpapers/color_5F9EA0.png",
         },
         {
           texture: "images/wallpapers/color_98FB98.jpeg",
         },
         {
+          name: "3D Room Wallpaper Color 2",
           texture: "images/wallpapers/color_e587a0.png",
         },
         {
+          name: "3D Room Wallpaper Color 3",
           texture: "images/wallpapers/color_E6F7FF.jpeg",
         },
         {
+          name: "3D Room Wallpaper Color 4",
           texture: "images/wallpapers/color_FAEBD7.jpeg",
         },
         {
+          name: "3D Room Wallpaper Color 5",
           texture: "images/wallpapers/color_FAFAD2.jpeg",
         },
       ],
@@ -41,34 +48,42 @@ const constants = {
       icon: "images/icons/floor_icon.png",
       colorList: [
         {
+          name: "3D Room Cream Floor",
           texture: "images/floors/cream_floor.jpeg",
           size: [10, 10],
         },
         {
+          name: "3D Room Whitewood Floor",
           texture: "images/floors/whitewood_floor.jpg",
           size: [10, 10],
         },
         {
+          name: "3D Room Redwood Floor",
           texture: "images/floors/redwood_floor.jpeg",
           size: [10, 10],
         },
         {
+          name: "3D Room Cotto Floor 1",
           texture: "images/floors/cotto_floor_1.jpg",
           size: [10, 10],
         },
         {
+          name: "3D Room Cotto Floor 2",
           texture: "images/floors/cotto_floor.jpg",
           size: [10, 10],
         },
         {
+          name: "3D Room Black And White Floor 1",
           texture: "images/floors/black_white_floor_2.jpeg",
           size: [10, 10],
         },
         {
+          name: "3D Room Black And White Floor 2",
           texture: "images/floors/black_white_floor_1.png",
           size: [10, 10],
         },
         {
+          name: "3D Room Black And White Floor 3",
           texture: "images/floors/black_white_floor_3.jpg",
           size: [10, 10],
         },
@@ -80,27 +95,35 @@ const constants = {
       icon: "images/icons/door_icon.png",
       colorList: [
         {
+          name: "3D Room Single Door 1",
           texture: "images/doors/single_1.png",
         },
         {
+          name: "3D Room Single Door 2",
           texture: "images/doors/single_2.png",
         },
         {
+          name: "3D Room Single Door 3",
           texture: "images/doors/single_3.png",
         },
         {
+          name: "3D Room Single Door 4",
           texture: "images/doors/single_4.png",
         },
         {
+          name: "3D Room Single Door 5",
           texture: "images/doors/single_5.png",
         },
         {
+          name: "3D Room Single Door 6",
           texture: "images/doors/single_6.png",
         },
         {
+          name: "3D Room Single Door 7",
           texture: "images/doors/single_7.png",
         },
         {
+          name: "3D Room Double Door 1",
           texture: "images/doors/double_1.png",
         },
       ],
@@ -111,34 +134,42 @@ const constants = {
       icon: "images/icons/window_icon.png",
       colorList: [
         {
+          name: "3D Room Single Window 1",
           texture: "images/windows/single_1.png",
           size: [2, 1.5],
         },
         {
+          name: "3D Room Single Window 2",
           texture: "images/windows/single_2.png",
           size: [2, 2],
         },
         {
+          name: "3D Room Single Window 3",
           texture: "images/windows/single_3.png",
           size: [2, 1.5],
         },
         {
+          name: "3D Room Single Window 4",
           texture: "images/windows/single_4.png",
           size: [3, 1.5],
         },
         {
+          name: "3D Room Single Window 5",
           texture: "images/windows/single_5.png",
           size: [2, 2],
         },
         {
+          name: "3D Room Single Window 6",
           texture: "images/windows/single_6.png",
           size: [3, 2],
         },
         {
+          name: "3D Room Single Window 7",
           texture: "images/windows/single_7.png",
           size: [1, 2],
         },
         {
+          name: "3D Room Single Window 8",
           texture: "images/windows/single_8.png",
           size: [2, 2],
         },
@@ -166,37 +197,48 @@ const constants = {
           color: [
             {
               name: "frame",
-              meshNameList: ["alivar_arca_standard_mat_2_1", "alivar_arca_standard_mat_2_5"],
+              meshNameList: [
+                "alivar_arca_standard_mat_2_1",
+                "alivar_arca_standard_mat_2_5",
+              ],
               colorList: [
                 {
+                  name: "3D Room Bed Frame Color 3",
                   texture: "images/model_colors/color_3.jpg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Bed Frame Color 4",
                   texture: "images/model_colors/color_4.jpg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Bed Frame Color 10",
                   texture: "images/model_colors/color_10.jpeg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Bed Frame Color 11",
                   texture: "images/model_colors/color_11.jpeg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Bed Frame Color 12",
                   texture: "images/model_colors/color_12.jpg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Bed Frame Color 13",
                   texture: "images/model_colors/color_13.jpg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Bed Frame Color 14",
                   texture: "images/model_colors/color_14.jpg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Bed Frame Color 15",
                   texture: "images/model_colors/color_15.jpg",
                   size: [2, 2],
                 },
@@ -207,34 +249,42 @@ const constants = {
               meshNameList: ["alivar_arca_standard_mat_2_2"],
               colorList: [
                 {
+                  name: "3D Room Bed Futon And Pillow Color 3",
                   texture: "images/model_colors/color_3.jpg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Bed Futon And Pillow Color 4",
                   texture: "images/model_colors/color_4.jpg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Bed Futon And Pillow Color 5",
                   texture: "images/model_colors/color_5.jpg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Bed Futon And Pillow Color 6",
                   texture: "images/model_colors/color_6.jpg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Bed Futon And Pillow Color 7",
                   texture: "images/model_colors/color_7.jpg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Bed Futon And Pillow Color 8",
                   texture: "images/model_colors/color_8.jpeg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Bed Futon And Pillow Color 9",
                   texture: "images/model_colors/color_9.jpg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Bed Futon And Pillow Color 17",
                   texture: "images/model_colors/color_17.png",
                   size: [2, 2],
                 },
@@ -245,34 +295,42 @@ const constants = {
               meshNameList: ["alivar_arca_standard_mat_2_3"],
               colorList: [
                 {
+                  name: "3D Room Bed Sheet Color 3",
                   texture: "images/model_colors/color_3.jpg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Bed Sheet Color 4",
                   texture: "images/model_colors/color_4.jpg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Bed Sheet Color 5",
                   texture: "images/model_colors/color_5.jpg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Bed Sheet Color 6",
                   texture: "images/model_colors/color_6.jpg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Bed Sheet Color 7",
                   texture: "images/model_colors/color_7.jpg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Bed Sheet Color 8",
                   texture: "images/model_colors/color_8.jpeg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Bed Sheet Color 9",
                   texture: "images/model_colors/color_9.jpg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Bed Sheet Color 17",
                   texture: "images/model_colors/color_17.png",
                   size: [2, 2],
                 },
@@ -280,33 +338,36 @@ const constants = {
             },
             {
               name: "foot",
-              meshNameList: [
-                "alivar_arca_standard_mat_2_4"
-              ],
+              meshNameList: ["alivar_arca_standard_mat_2_4"],
               colorList: [
                 {
+                  name: "3D Room Bed Foot Color 16",
                   texture: "images/model_colors/color_16.jpg",
                   size: [1, 1],
                 },
                 {
+                  name: "3D Room Bed Foot Color 17",
                   texture: "images/model_colors/color_17.png",
                   size: [1, 1],
                 },
                 {
+                  name: "3D Room Bed Foot Color 18",
                   texture: "images/model_colors/color_18.png",
                   size: [1, 1],
                 },
                 {
+                  name: "3D Room Bed Foot Color 19",
                   texture: "images/model_colors/color_19.png",
                   size: [1, 1],
                 },
                 {
+                  name: "3D Room Bed Foot Color 20",
                   texture: "images/model_colors/color_20.jpg",
                   size: [1, 1],
                 },
               ],
             },
-          ]
+          ],
         },
         {
           id: 2,
@@ -318,37 +379,48 @@ const constants = {
           color: [
             {
               name: "frame",
-              meshNameList: ["poltronafrau_flair_208x229", "poltronafrau_flair_208x236"],
+              meshNameList: [
+                "poltronafrau_flair_208x229",
+                "poltronafrau_flair_208x236",
+              ],
               colorList: [
                 {
+                  name: "3D Room Bed Frame Color 3",
                   texture: "images/model_colors/color_3.jpg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Bed Frame Color 4",
                   texture: "images/model_colors/color_4.jpg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Bed Frame Color 10",
                   texture: "images/model_colors/color_10.jpeg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Bed Frame Color 11",
                   texture: "images/model_colors/color_11.jpeg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Bed Frame Color 12",
                   texture: "images/model_colors/color_12.jpg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Bed Frame Color 13",
                   texture: "images/model_colors/color_13.jpg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Bed Frame Color 14",
                   texture: "images/model_colors/color_14.jpg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Bed Frame Color 15",
                   texture: "images/model_colors/color_15.jpg",
                   size: [2, 2],
                 },
@@ -356,37 +428,48 @@ const constants = {
             },
             {
               name: "Futon",
-              meshNameList: ["poltronafrau_flair_208x231", "poltronafrau_flair_208x230"],
+              meshNameList: [
+                "poltronafrau_flair_208x231",
+                "poltronafrau_flair_208x230",
+              ],
               colorList: [
                 {
+                  name: "3D Room Bed Futon Color 3",
                   texture: "images/model_colors/color_3.jpg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Bed Futon Color 4",
                   texture: "images/model_colors/color_4.jpg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Bed Futon Color 5",
                   texture: "images/model_colors/color_5.jpg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Bed Futon Color 6",
                   texture: "images/model_colors/color_6.jpg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Bed Futon Color 7",
                   texture: "images/model_colors/color_7.jpg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Bed Futon Color 8",
                   texture: "images/model_colors/color_8.jpeg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Bed Futon Color 9",
                   texture: "images/model_colors/color_9.jpg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Bed Futon Color 17",
                   texture: "images/model_colors/color_17.png",
                   size: [2, 2],
                 },
@@ -394,37 +477,49 @@ const constants = {
             },
             {
               name: "Pillow",
-              meshNameList: ["poltronafrau_flair_208x232", "poltronafrau_flair_208x233", "poltronafrau_flair_208x234"],
+              meshNameList: [
+                "poltronafrau_flair_208x232",
+                "poltronafrau_flair_208x233",
+                "poltronafrau_flair_208x234",
+              ],
               colorList: [
                 {
+                  name: "3D Room Bed Pillow Color 3",
                   texture: "images/model_colors/color_3.jpg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Bed Pillow Color 4",
                   texture: "images/model_colors/color_4.jpg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Bed Pillow Color 5",
                   texture: "images/model_colors/color_5.jpg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Bed Pillow Color 6",
                   texture: "images/model_colors/color_6.jpg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Bed Pillow Color 7",
                   texture: "images/model_colors/color_7.jpg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Bed Pillow Color 8",
                   texture: "images/model_colors/color_8.jpeg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Bed Pillow Color 9",
                   texture: "images/model_colors/color_9.jpg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Bed Pillow Color 17",
                   texture: "images/model_colors/color_17.png",
                   size: [2, 2],
                 },
@@ -435,40 +530,48 @@ const constants = {
               meshNameList: ["poltronafrau_flair_208x235"],
               colorList: [
                 {
+                  name: "3D Room Bed Sheet Color 3",
                   texture: "images/model_colors/color_3.jpg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Bed Sheet Color 4",
                   texture: "images/model_colors/color_4.jpg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Bed Sheet Color 5",
                   texture: "images/model_colors/color_5.jpg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Bed Sheet Color 6",
                   texture: "images/model_colors/color_6.jpg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Bed Sheet Color 7",
                   texture: "images/model_colors/color_7.jpg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Bed Sheet Color 8",
                   texture: "images/model_colors/color_8.jpeg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Bed Sheet Color 9",
                   texture: "images/model_colors/color_9.jpg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Bed Sheet Color 17",
                   texture: "images/model_colors/color_17.png",
                   size: [2, 2],
                 },
               ],
             },
-          ]
+          ],
         },
       ],
     },
@@ -490,34 +593,42 @@ const constants = {
               meshNameList: ["Box", "Box2", "Box4"],
               colorList: [
                 {
+                  name: "3D Room Cushion Color 5",
                   texture: "images/model_colors/color_5.jpg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Cushion Color 8",
                   texture: "images/model_colors/color_8.jpeg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Cushion Color 3",
                   texture: "images/model_colors/color_3.jpg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Cushion Color 4",
                   texture: "images/model_colors/color_4.jpg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Cushion Color 10",
                   texture: "images/model_colors/color_10.jpeg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Cushion Color 11",
                   texture: "images/model_colors/color_11.jpeg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Cushion Color 12",
                   texture: "images/model_colors/color_12.jpg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Cushion Color 13",
                   texture: "images/model_colors/color_13.jpg",
                   size: [2, 2],
                 },
@@ -528,34 +639,42 @@ const constants = {
               meshNameList: ["Box1", "Box3", "Box5", "Box6", "Box7"],
               colorList: [
                 {
+                  name: "3D Room Cushion Back 5",
                   texture: "images/model_colors/color_5.jpg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Cushion Back 8",
                   texture: "images/model_colors/color_8.jpeg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Cushion Back 3",
                   texture: "images/model_colors/color_3.jpg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Cushion Back 4",
                   texture: "images/model_colors/color_4.jpg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Cushion Back 10",
                   texture: "images/model_colors/color_10.jpeg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Cushion Back 11",
                   texture: "images/model_colors/color_11.jpeg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Cushion Back 12",
                   texture: "images/model_colors/color_12.jpg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Cushion Back 13",
                   texture: "images/model_colors/color_13.jpg",
                   size: [2, 2],
                 },
@@ -585,22 +704,27 @@ const constants = {
               ],
               colorList: [
                 {
+                  name: "3D Room Cushion Foot Color 16",
                   texture: "images/model_colors/color_16.jpg",
                   size: [1, 1],
                 },
                 {
+                  name: "3D Room Cushion Foot Color 17",
                   texture: "images/model_colors/color_17.png",
                   size: [1, 1],
                 },
                 {
+                  name: "3D Room Cushion Foot Color 18",
                   texture: "images/model_colors/color_18.png",
                   size: [1, 1],
                 },
                 {
+                  name: "3D Room Cushion Foot Color 19",
                   texture: "images/model_colors/color_19.png",
                   size: [1, 1],
                 },
                 {
+                  name: "3D Room Cushion Foot Color 20",
                   texture: "images/model_colors/color_20.jpg",
                   size: [1, 1],
                 },
@@ -621,34 +745,42 @@ const constants = {
               meshNameList: ["not_clear_obj_0_v1"],
               colorList: [
                 {
+                  name: "3D Room Cushion 5",
                   texture: "images/model_colors/color_5.jpg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Cushion 8",
                   texture: "images/model_colors/color_8.jpeg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Cushion 3",
                   texture: "images/model_colors/color_3.jpg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Cushion 4",
                   texture: "images/model_colors/color_4.jpg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Cushion 10",
                   texture: "images/model_colors/color_10.jpeg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Cushion 11",
                   texture: "images/model_colors/color_11.jpeg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Cushion 12",
                   texture: "images/model_colors/color_12.jpg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Cushion 13",
                   texture: "images/model_colors/color_13.jpg",
                   size: [2, 2],
                 },
@@ -659,22 +791,27 @@ const constants = {
               meshNameList: ["not_clear_obj_1_v1"],
               colorList: [
                 {
+                  name: "3D Room Cushion Foot 16",
                   texture: "images/model_colors/color_16.jpg",
                   size: [1, 1],
                 },
                 {
+                  name: "3D Room Cushion Foot 17",
                   texture: "images/model_colors/color_17.png",
                   size: [1, 1],
                 },
                 {
+                  name: "3D Room Cushion Foot 18",
                   texture: "images/model_colors/color_18.png",
                   size: [1, 1],
                 },
                 {
+                  name: "3D Room Cushion Foot 19",
                   texture: "images/model_colors/color_19.png",
                   size: [1, 1],
                 },
                 {
+                  name: "3D Room Cushion Foot 20",
                   texture: "images/model_colors/color_20.jpg",
                   size: [1, 1],
                 },
@@ -717,30 +854,37 @@ const constants = {
               ],
               colorList: [
                 {
+                  name: "3D Room Table Frame 1",
                   texture: "images/model_colors/color_1.jpg",
                   size: [1, 1],
                 },
                 {
+                  name: "3D Room Table Frame 2",
                   texture: "images/model_colors/color_2.jpg",
                   size: [1, 1],
                 },
                 {
+                  name: "3D Room Table Frame 17",
                   texture: "images/model_colors/color_17.png",
                   size: [1, 1],
                 },
                 {
+                  name: "3D Room Table Frame 18",
                   texture: "images/model_colors/color_18.png",
                   size: [1, 1],
                 },
                 {
+                  name: "3D Room Table Frame 19",
                   texture: "images/model_colors/color_19.png",
                   size: [1, 1],
                 },
                 {
+                  name: "3D Room Table Frame 20",
                   texture: "images/model_colors/color_20.jpg",
                   size: [1, 1],
                 },
                 {
+                  name: "3D Room Table Frame 16",
                   texture: "images/model_colors/color_16.jpg",
                   size: [1, 1],
                 },
@@ -751,34 +895,42 @@ const constants = {
               meshNameList: ["Box1", "Box7"],
               colorList: [
                 {
+                  name: "3D Room Table Surface 15",
                   texture: "images/model_colors/color_15.jpg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Table Surface 1",
                   texture: "images/model_colors/color_1.jpg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Table Surface 2",
                   texture: "images/model_colors/color_2.jpg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Table Surface 17",
                   texture: "images/model_colors/color_17.png",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Table Surface 18",
                   texture: "images/model_colors/color_18.png",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Table Surface 19",
                   texture: "images/model_colors/color_19.png",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Table Surface 20",
                   texture: "images/model_colors/color_20.jpg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Table Surface 16",
                   texture: "images/model_colors/color_16.jpg",
                   size: [2, 2],
                 },
@@ -798,34 +950,42 @@ const constants = {
               ],
               colorList: [
                 {
+                  name: "3D Room Table Storage 15",
                   texture: "images/model_colors/color_15.jpg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Table Storage 1",
                   texture: "images/model_colors/color_1.jpg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Table Storage 2",
                   texture: "images/model_colors/color_2.jpg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Table Storage 17",
                   texture: "images/model_colors/color_17.png",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Table Storage 18",
                   texture: "images/model_colors/color_18.png",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Table Storage 19",
                   texture: "images/model_colors/color_19.png",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Table Storage 20",
                   texture: "images/model_colors/color_20.jpg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Table Storage 16",
                   texture: "images/model_colors/color_16.jpg",
                   size: [2, 2],
                 },
@@ -876,30 +1036,37 @@ const constants = {
               ],
               colorList: [
                 {
+                  name: "3D Room Table Frame 1",
                   texture: "images/model_colors/color_1.jpg",
                   size: [1, 1],
                 },
                 {
+                  name: "3D Room Table Frame 2",
                   texture: "images/model_colors/color_2.jpg",
                   size: [1, 1],
                 },
                 {
+                  name: "3D Room Table Frame 17",
                   texture: "images/model_colors/color_17.png",
                   size: [1, 1],
                 },
                 {
+                  name: "3D Room Table Frame 18",
                   texture: "images/model_colors/color_18.png",
                   size: [1, 1],
                 },
                 {
+                  name: "3D Room Table Frame 19",
                   texture: "images/model_colors/color_19.png",
                   size: [1, 1],
                 },
                 {
+                  name: "3D Room Table Frame 20",
                   texture: "images/model_colors/color_20.jpg",
                   size: [1, 1],
                 },
                 {
+                  name: "3D Room Table Frame 16",
                   texture: "images/model_colors/color_16.jpg",
                   size: [1, 1],
                 },
@@ -917,34 +1084,42 @@ const constants = {
               ],
               colorList: [
                 {
+                  name: "3D Room Table Surface 15",
                   texture: "images/model_colors/color_15.jpg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Table Surface 1",
                   texture: "images/model_colors/color_1.jpg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Table Surface 2",
                   texture: "images/model_colors/color_2.jpg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Table Surface 17",
                   texture: "images/model_colors/color_17.png",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Table Surface 18",
                   texture: "images/model_colors/color_18.png",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Table Surface 19",
                   texture: "images/model_colors/color_19.png",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Table Surface 20",
                   texture: "images/model_colors/color_20.jpg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Table Surface 16",
                   texture: "images/model_colors/color_16.jpg",
                   size: [2, 2],
                 },
@@ -955,34 +1130,42 @@ const constants = {
               meshNameList: ["Box14"],
               colorList: [
                 {
+                  name: "3D Room Table Storage 15",
                   texture: "images/model_colors/color_15.jpg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Table Storage 1",
                   texture: "images/model_colors/color_1.jpg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Table Storage 2",
                   texture: "images/model_colors/color_2.jpg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Table Storage 17",
                   texture: "images/model_colors/color_17.png",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Table Storage 18",
                   texture: "images/model_colors/color_18.png",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Table Storage 19",
                   texture: "images/model_colors/color_19.png",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Table Storage 20",
                   texture: "images/model_colors/color_20.jpg",
                   size: [2, 2],
                 },
                 {
+                  name: "3D Room Table Storage 16",
                   texture: "images/model_colors/color_16.jpg",
                   size: [2, 2],
                 },
@@ -1010,34 +1193,42 @@ const constants = {
               meshNameList: ["04_LP"],
               colorList: [
                 {
+                  name: "3D Room Cabinet Frame 1",
                   texture: "images/model_colors/color_1.jpg",
                   size: [10, 10],
                 },
                 {
+                  name: "3D Room Cabinet Frame 2",
                   texture: "images/model_colors/color_2.jpg",
                   size: [10, 10],
                 },
                 {
+                  name: "3D Room Cabinet Frame 3",
                   texture: "images/model_colors/color_3.jpg",
                   size: [10, 10],
                 },
                 {
+                  name: "3D Room Cabinet Frame 4",
                   texture: "images/model_colors/color_4.jpg",
                   size: [10, 10],
                 },
                 {
+                  name: "3D Room Cabinet Frame 17",
                   texture: "images/model_colors/color_17.png",
                   size: [10, 10],
                 },
                 {
+                  name: "3D Room Cabinet Frame 18",
                   texture: "images/model_colors/color_18.png",
                   size: [10, 10],
                 },
                 {
+                  name: "3D Room Cabinet Frame 19",
                   texture: "images/model_colors/color_19.png",
                   size: [10, 10],
                 },
                 {
+                  name: "3D Room Cabinet Frame 20",
                   texture: "images/model_colors/color_20.jpg",
                   size: [10, 10],
                 },
@@ -1048,34 +1239,42 @@ const constants = {
               meshNameList: ["Object002"],
               colorList: [
                 {
+                  name: "3D Room Cabinet Door 1",
                   texture: "images/model_colors/color_1.jpg",
                   size: [10, 10],
                 },
                 {
+                  name: "3D Room Cabinet Door 2",
                   texture: "images/model_colors/color_2.jpg",
                   size: [10, 10],
                 },
                 {
+                  name: "3D Room Cabinet Door 3",
                   texture: "images/model_colors/color_3.jpg",
                   size: [10, 10],
                 },
                 {
+                  name: "3D Room Cabinet Door 4",
                   texture: "images/model_colors/color_4.jpg",
                   size: [10, 10],
                 },
                 {
+                  name: "3D Room Cabinet Door 16",
                   texture: "images/model_colors/color_16.jpg",
                   size: [10, 10],
                 },
                 {
+                  name: "3D Room Cabinet Door 19",
                   texture: "images/model_colors/color_19.png",
                   size: [10, 10],
                 },
                 {
+                  name: "3D Room Cabinet Door 20",
                   texture: "images/model_colors/color_20.jpg",
                   size: [10, 10],
                 },
                 {
+                  name: "3D Room Cabinet Door 17",
                   texture: "images/model_colors/color_17.png",
                   size: [10, 10],
                 },
@@ -1103,10 +1302,12 @@ const constants = {
               meshNameList: ["study_chair"],
               colorList: [
                 {
+                  name: "3D Room Cabinet Frame 1",
                   texture: "images/model_colors/color_1.jpg",
                   size: [1, 1],
                 },
                 {
+                  name: "3D Room Cabinet Frame 2",
                   texture: "images/model_colors/color_2.jpg",
                   size: [1, 1],
                 },
@@ -1124,17 +1325,26 @@ const constants = {
           color: [
             {
               name: "frame",
-              meshNameList: ["Mechanisms", "Wheels_0", "Wheels_1", "SeatBack_notUVed_0", "Legs_1"],
+              meshNameList: [
+                "Mechanisms",
+                "Wheels_0",
+                "Wheels_1",
+                "SeatBack_notUVed_0",
+                "Legs_1",
+              ],
               colorList: [
                 {
+                  name: "3D Room Chair Frame 22",
                   texture: "images/model_colors/color_22.jpeg",
                   size: [1, 1],
                 },
                 {
+                  name: "3D Room Chair Frame 23",
                   texture: "images/model_colors/color_23.png",
                   size: [1, 1],
                 },
                 {
+                  name: "3D Room Chair Frame 17",
                   texture: "images/model_colors/color_17.png",
                   size: [1, 1],
                 },
@@ -1145,30 +1355,37 @@ const constants = {
               meshNameList: ["SeatBack_notUVed_1"],
               colorList: [
                 {
+                  name: "3D Room Chair Seat Back 10",
                   texture: "images/model_colors/color_10.jpeg",
                   size: [1, 1],
                 },
                 {
+                  name: "3D Room Chair Seat Back 11",
                   texture: "images/model_colors/color_11.jpeg",
                   size: [1, 1],
                 },
                 {
+                  name: "3D Room Chair Seat Back 12",
                   texture: "images/model_colors/color_12.jpg",
                   size: [1, 1],
                 },
                 {
+                  name: "3D Room Chair Seat Back 13",
                   texture: "images/model_colors/color_13.jpg",
                   size: [1, 1],
                 },
                 {
+                  name: "3D Room Chair Seat Back 14",
                   texture: "images/model_colors/color_14.jpg",
                   size: [1, 1],
                 },
                 {
+                  name: "3D Room Chair Seat Back 15",
                   texture: "images/model_colors/color_15.jpg",
                   size: [1, 1],
                 },
                 {
+                  name: "3D Room Chair Seat Back 21",
                   texture: "images/model_colors/color_21.png",
                   size: [1, 1],
                 },
@@ -1179,26 +1396,32 @@ const constants = {
               meshNameList: ["Seat_notUVed"],
               colorList: [
                 {
+                  name: "3D Room Chair Seat 10",
                   texture: "images/model_colors/color_10.jpeg",
                   size: [1, 1],
                 },
                 {
+                  name: "3D Room Chair Seat 11",
                   texture: "images/model_colors/color_11.jpeg",
                   size: [1, 1],
                 },
                 {
+                  name: "3D Room Chair Seat 12",
                   texture: "images/model_colors/color_12.jpg",
                   size: [1, 1],
                 },
                 {
+                  name: "3D Room Chair Seat 13",
                   texture: "images/model_colors/color_13.jpg",
                   size: [1, 1],
                 },
                 {
+                  name: "3D Room Chair Seat 14",
                   texture: "images/model_colors/color_14.jpg",
                   size: [1, 1],
                 },
                 {
+                  name: "3D Room Chair Seat 15",
                   texture: "images/model_colors/color_15.jpg",
                   size: [1, 1],
                 },
@@ -1209,30 +1432,37 @@ const constants = {
               meshNameList: ["Legs_0"],
               colorList: [
                 {
+                  name: "3D Room Chair Legs 22",
                   texture: "images/model_colors/color_22.jpeg",
                   size: [1, 1],
                 },
                 {
+                  name: "3D Room Chair Legs 23",
                   texture: "images/model_colors/color_23.png",
                   size: [1, 1],
                 },
                 {
+                  name: "3D Room Chair Legs 16",
                   texture: "images/model_colors/color_16.jpg",
                   size: [1, 1],
                 },
                 {
+                  name: "3D Room Chair Legs 17",
                   texture: "images/model_colors/color_17.png",
                   size: [1, 1],
                 },
                 {
+                  name: "3D Room Chair Legs 18",
                   texture: "images/model_colors/color_18.png",
                   size: [1, 1],
                 },
                 {
+                  name: "3D Room Chair Legs 19",
                   texture: "images/model_colors/color_19.png",
                   size: [1, 1],
                 },
                 {
+                  name: "3D Room Chair Legs 20",
                   texture: "images/model_colors/color_20.jpg",
                   size: [1, 1],
                 },
@@ -1240,8 +1470,8 @@ const constants = {
             },
           ],
         },
-      ]
-    }
+      ],
+    },
   ],
 };
 

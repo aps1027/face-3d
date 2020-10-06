@@ -92,7 +92,11 @@
               class="color-btn"
               @click="changeModelColor(design, color)"
             >
-              <img class="h-full" :src="getSrc(color.texture)" />
+              <img
+                class="h-full"
+                :src="getSrc(color.texture)"
+                :alt="color.name"
+              />
             </div>
           </div>
         </div>
@@ -832,7 +836,6 @@ export default {
           chairModel.name = "chair";
           chairModel.traverse((o) => {
             if (o.isMesh) {
-              console.log(o.name);
               o.castShadow = true;
               o.receiveShadow = true;
             }
