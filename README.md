@@ -1,6 +1,5 @@
 # face 3D Modelling
-This is sample demostration App for face 3D model.
-From webcam will detect the face and will show 3D model.
+This is sample demostration 3D Room Interior Design Decoration
 
 ## Prerequisites
 ### Install docker and docker compose 
