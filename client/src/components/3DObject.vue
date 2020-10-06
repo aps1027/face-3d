@@ -4,7 +4,11 @@
       class="xs:w-8 xs:h-8 xs:p-1 fix-object plus-btn w-16 h-16 p-3"
       @click="closeModal = false"
     >
-      <img class="dialog-img" :src="getSrc('images/icons/plus_icon.png')" />
+      <img
+        class="dialog-img"
+        :src="getSrc('images/icons/plus_icon.png')"
+        alt="3D Object Plus Icon"
+      />
     </div>
     <main
       v-if="!closeModal"
@@ -39,11 +43,13 @@
                     v-if="!model.icon"
                     class="dialog-img opacity-75 p-4"
                     :src="getSrc('images/icons/plus_icon.png')"
+                    alt="3D Object Plus Icon"
                   />
                   <img
                     v-else
                     class="dialog-img opacity-75"
                     :src="getSrc(model.icon)"
+                    :alt="model.name"
                   />
                 </div>
               </div>
@@ -58,11 +64,13 @@
                     v-if="!model.image"
                     class="dialog-img opacity-75"
                     :src="getSrc('images/icons/plus_icon.png')"
+                    alt="3D Object Plus Icon"
                   />
                   <img
                     v-else
                     class="dialog-img opacity-75"
                     :src="getSrc(model.image)"
+                    :alt="model.name"
                   />
                 </div>
               </div>

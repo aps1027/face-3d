@@ -6,7 +6,7 @@
       @click="clickObjectIcon(model)"
       class="xs:w-10 xs:h-10 bar-btn w-20 h-20"
     >
-      <img class="bar-img" :src="getSrc(model.icon)" />
+      <img class="bar-img" :src="getSrc(model.icon)" :alt="model.name" />
     </div>
   </div>
 </template>
