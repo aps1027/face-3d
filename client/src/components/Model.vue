@@ -92,7 +92,11 @@
               class="color-btn"
               @click="changeModelColor(design, color)"
             >
-              <img class="h-full" :src="getSrc(color.texture)" />
+              <img
+                class="h-full"
+                :src="getSrc(color.texture)"
+                :alt="color.name"
+              />
             </div>
           </div>
         </div>
@@ -104,8 +108,8 @@
 
 <script>
 import * as THREE from "three";
-import GLTFLoader from "three-gltf-loader";
-import * as OrbitControls from "three-orbitcontrols";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import SideTabBar from "./SideTabBar.vue";
 import ColorPalette from "./ColorPalette.vue";
 import ObjectSideBar from "./ObjectSideBar.vue";
@@ -832,7 +836,6 @@ export default {
           chairModel.name = "chair";
           chairModel.traverse((o) => {
             if (o.isMesh) {
-              console.log(o.name);
               o.castShadow = true;
               o.receiveShadow = true;
             }

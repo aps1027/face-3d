@@ -6,7 +6,11 @@
       class="xs:w-10 xs:h-10 bar-btn w-20 h-20"
       @click="clickSwitch(materialItem)"
     >
-      <img class="bar-img" :src="getSrc(materialItem.icon)" />
+      <img
+        class="bar-img"
+        :src="getSrc(materialItem.icon)"
+        :alt="materialItem.name"
+      />
     </div>
   </div>
 </template>
