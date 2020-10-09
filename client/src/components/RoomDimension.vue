@@ -20,6 +20,7 @@
               class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               id="length"
               type="text"
+              :class="!isRoomLengthValid ? 'border-red-500' : ''"
               placeholder="Please input length in feet"
               v-model="roomLength"
             />
@@ -42,6 +43,7 @@
               class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               id="width"
               type="text"
+              :class="!isRoomWidthValid ? 'border-red-500' : ''"
               placeholder="Please input width in feet"
               v-model="roomWidth"
             />
