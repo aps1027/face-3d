@@ -581,7 +581,7 @@ export default {
         requestAnimationFrame(animate);
         controls.update();
         renderer.render(scene, camera);
-        if (rotateRoom) roomGroup.rotation.y += 0.025;
+        if (rotateRoom) roomGroup.rotation.y += 0.021;
       };
 
       window.addEventListener("resize", () => {
@@ -1107,8 +1107,8 @@ export default {
   @apply border-teal-600;
 }
 .min-size {
-  min-width: 360px;
-  min-height: 640px;
+  min-width: 320px;
+  min-height: 560px;
 }
 
 @media (min-width: 300px) and (max-width: 639px) {
