@@ -28,7 +28,7 @@
               v-if="!isRoomLengthValid"
               class="text-red-500 text-xs italic pt-1"
             >
-              Please input within {{ roomLengthRange[0] }} and
+              Please input between {{ roomLengthRange[0] }} and
               {{ roomLengthRange[1] }}.
             </p>
           </div>
@@ -51,7 +51,7 @@
               v-if="!isRoomWidthValid"
               class="text-red-500 text-xs italic pt-1"
             >
-              Please input within {{ roomWidthRange[0] }} and
+              Please input between {{ roomWidthRange[0] }} and
               {{ roomWidthRange[1] }}.
             </p>
           </div>
