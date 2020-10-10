@@ -19,7 +19,7 @@ export default {
 </script>
 <style scoped lang="postcss">
 .min-size {
-  min-width: 360px;
-  min-height: 640px;
+  min-width: 320px;
+  min-height: 560px;
 }
 </style>

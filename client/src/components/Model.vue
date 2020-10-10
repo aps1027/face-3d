@@ -1,5 +1,9 @@
 <template>
   <div>
+    <RoomDimension
+      v-if="!roomDimension"
+      @get-room-dimension="getRoomDimension"
+    />
     <ProgressLoading v-if="showLoading" />
     <SideTabBar @get-switch="getSwitch" />
     <ObjectSideBar
@@ -115,6 +119,7 @@ import ColorPalette from "./ColorPalette.vue";
 import ObjectSideBar from "./ObjectSideBar.vue";
 import Object3D from "./3DObject.vue";
 import ProgressLoading from "./ProgressLoading.vue";
+import RoomDimension from "./RoomDimension.vue";
 import constants from "../constants";
 
 let container;
@@ -128,6 +133,7 @@ let secondWall;
 let thirdWall;
 let fouthWall;
 let floor;
+let roomGroup;
 let door;
 let windowFrame;
 let bedModel;
@@ -137,6 +143,8 @@ let cabinetModel;
 let chairModel;
 
 let commonWallMaterial;
+let rotateRoom = true;
+
 export default {
   components: {
     SideTabBar,
@@ -144,6 +152,7 @@ export default {
     Object3D,
     ObjectSideBar,
     ProgressLoading,
+    RoomDimension,
   },
   data() {
     return {
@@ -152,7 +161,7 @@ export default {
       wallColorCode: "#ffffff",
       floorColorCode: "#ffffff",
       frameColor: "#2C3E50",
-      roomLength: 20,
+      roomLength: 15,
       roomWidth: 15,
       roomHeight: 8,
       thinkness: 0.5,
@@ -164,6 +173,7 @@ export default {
       hideAdjustmentPanel: true,
       hideColorPanel: true,
       selectedObj: null,
+      roomDimension: null,
       range: {
         x: {
           min: 0,
@@ -507,6 +517,28 @@ export default {
     },
 
     /**
+     * This is to get room dimensions.
+     * @param {object} dimension (width and length)
+     * @returns void
+     */
+    getRoomDimension(dimension) {
+      this.roomDimension = dimension;
+      rotateRoom = !this.roomDimension;
+      this.roomLength = this.roomDimension.length;
+      this.roomWidth = this.roomDimension.width;
+
+      let tmpGroup = scene.getObjectByName("room-group");
+      if (tmpGroup) {
+        scene.remove(tmpGroup);
+      }
+      this.createWalls();
+      this.createFloor();
+      this.createDoor();
+      this.createWindow();
+      this.groupInitRoomItems();
+    },
+
+    /**
      * This is to handle for clicking adjustment cross icon.
      * @returns void
      */
@@ -538,6 +570,7 @@ export default {
       this.createFloor();
       this.createDoor();
       this.createWindow();
+      this.groupInitRoomItems();
       this.createRenderer();
 
       controls.update();
@@ -548,6 +581,7 @@ export default {
         requestAnimationFrame(animate);
         controls.update();
         renderer.render(scene, camera);
+        if (rotateRoom) roomGroup.rotation.y += 0.021;
       };
 
       window.addEventListener("resize", () => {
@@ -905,7 +939,6 @@ export default {
         (this.roomHeight * this.scale) / 2,
         0
       );
-      scene.add(firstWall);
 
       // second wall
       const secondGeometry = new THREE.BoxGeometry(
@@ -919,7 +952,6 @@ export default {
         (this.roomHeight * this.scale) / 2,
         0
       );
-      scene.add(secondWall);
 
       // third wall
       const thirdGeometry = new THREE.BoxGeometry(
@@ -933,7 +965,6 @@ export default {
         (this.roomHeight * this.scale) / 2,
         (this.roomLength * this.scale) / 2
       );
-      scene.add(thirdWall);
 
       // fouth wall
       const fouthGeometry = new THREE.BoxGeometry(
@@ -947,7 +978,6 @@ export default {
         (this.roomHeight * this.scale) / 2,
         -(this.roomLength * this.scale) / 2
       );
-      scene.add(fouthWall);
     },
 
     /**
@@ -967,7 +997,19 @@ export default {
       });
       floor = new THREE.Mesh(floorGeometry, floorMaterial);
       floor.position.set(0, 0.01, 0);
-      scene.add(floor);
+    },
+
+    groupInitRoomItems() {
+      roomGroup = new THREE.Group();
+      roomGroup.add(firstWall);
+      roomGroup.add(secondWall);
+      roomGroup.add(thirdWall);
+      roomGroup.add(fouthWall);
+      roomGroup.add(floor);
+      roomGroup.add(windowFrame);
+      roomGroup.add(door);
+      roomGroup.name = "room-group";
+      scene.add(roomGroup);
     },
 
     /**
@@ -987,7 +1029,6 @@ export default {
         (this.roomHeight * this.scale) / 2.7,
         -((this.roomLength - 0.6) * this.scale) / 2
       );
-      scene.add(door);
     },
 
     /**
@@ -1008,7 +1049,6 @@ export default {
         (this.roomHeight * this.scale) / 2,
         0
       );
-      scene.add(windowFrame);
     },
 
     /**
@@ -1067,8 +1107,8 @@ export default {
   @apply border-teal-600;
 }
 .min-size {
-  min-width: 360px;
-  min-height: 640px;
+  min-width: 320px;
+  min-height: 560px;
 }
 
 @media (min-width: 300px) and (max-width: 639px) {
