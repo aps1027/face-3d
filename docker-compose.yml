@@ -12,6 +12,7 @@ services:
   server:
     build:
       context: ./server
+      dockerfile: dev.Dockerfile
     container_name: face3d-server
     working_dir: /work
     ports:
@@ -19,4 +20,4 @@ services:
       - 9229:9229
     volumes:
       - ./server:/work
-    command: denon run --allow-net --allow-write --allow-read --allow-env --allow-plugin --unstable  server.ts
+    command: denon run --allow-net main.ts

@@ -1,6 +1,6 @@
 FROM debian:buster-slim
 
-ENV DENO_VERSION=1.3.2
+ENV DENO_VERSION=1.4.0
 ENV DENON_VERSION=2.3.3
 
 RUN apt-get -qq update \

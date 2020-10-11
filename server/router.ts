@@ -1,7 +1,8 @@
 import { Router, RouterContext } from "./deps.ts";
+const router = new Router();
 
-const router = new Router({prefix: "/api"});
-router.get("/", (ctx: RouterContext) => {
-  ctx.response.body = "Hello Worlds Deno APS";
-});
+router
+  .get("/", (ctx: RouterContext) => {
+    ctx.response.body = "Hello World APS";
+  });
 export default router;
