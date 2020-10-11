@@ -3,6 +3,6 @@ const router = new Router();
 
 router
   .get("/", (ctx: RouterContext) => {
-    ctx.response.body = "Hello World APS";
+    ctx.response.body = "Hello World";
   });
 export default router;
