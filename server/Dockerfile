@@ -7,4 +7,4 @@ COPY . ./
 RUN /bin/bash -c "deno cache deps.ts || true"
 ADD . .
 RUN deno cache main.ts
-CMD ["run", "--allow-net", "main.ts"]
+CMD ["run", "--allow-net", "--allow-write", "--allow-read", "--allow-env", "main.ts"]

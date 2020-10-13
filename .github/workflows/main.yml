@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - master
+      - face#19
   pull_request:
     branches:
       - master
