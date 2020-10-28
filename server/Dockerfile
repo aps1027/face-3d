@@ -1,4 +1,4 @@
-FROM hayd/debian-deno:1.4.0
+FROM hayd/debian-deno:1.3.3
 ENV PORT=5000
 EXPOSE 5000
 WORKDIR /app

@@ -20,4 +20,4 @@ services:
       - 9229:9229
     volumes:
       - ./server:/work
-    command: denon run --allow-net --allow-write --allow-read --allow-env main.ts
+    command: denon run --allow-net --allow-write --allow-read --allow-env --allow-plugin --unstable main.ts
