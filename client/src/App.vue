@@ -1,25 +1,15 @@
 <template>
-  <div class="min-size">
+  <div id="app">
     <Nav />
-    <Model />
+    <router-view />
   </div>
 </template>
-
 <script>
-import Model from "./components/Model.vue";
 import Nav from "./components/Nav.vue";
-
 export default {
-  name: "App",
+  name: "app",
   components: {
-    Model,
     Nav,
   },
-};
-</script>
-<style scoped lang="postcss">
-.min-size {
-  min-width: 320px;
-  min-height: 560px;
 }
-</style>
+</script>
