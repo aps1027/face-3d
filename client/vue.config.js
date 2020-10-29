@@ -5,6 +5,9 @@ module.exports = {
     msTileColor: "#000000",
     appleMobileWebAppCapable: "yes",
     appleMobileWebAppStatusBarStyle: "black",
+    workboxOptions: {
+      exclude: [/\.map$/, /_redirects/],
+    },
     manifestOptions: {
       icons: [
         {
