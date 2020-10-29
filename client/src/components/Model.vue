@@ -1068,6 +1068,9 @@ export default {
   mounted() {
     this.init();
   },
+  created() {
+    rotateRoom = true;
+  }
 };
 </script>
 <style scoped lang="postcss">
