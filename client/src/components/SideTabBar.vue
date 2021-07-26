@@ -15,13 +15,12 @@
   </div>
 </template>
 <script>
-import constants from "../constants";
+import db from "../Firebase";
 export default {
   name: "SideTabBar",
   data() {
     return {
-      imagePrefix: constants.IMAGE_PREFIX,
-      materialItemList: constants.MATERIAL_ITEM_LIST,
+      materialItemList: [],
     };
   },
   computed: {
@@ -44,6 +43,14 @@ export default {
     clickSwitch(materialItem) {
       this.$emit("get-switch", materialItem);
     },
+  },
+  async beforeMount() {
+    const materialItemList = [];
+    const snapshot = await db.collection("material-items").get();
+    snapshot.forEach((doc) => {
+      materialItemList.push(doc.data()[Object.keys(doc.data())[0]]);
+    });
+    this.materialItemList = materialItemList;
   },
 };
 </script>

@@ -17,5 +17,4 @@ This is sample demostration 3D Room Interior Design Decoration
    ```
    $ docker-compose up -d
    ```
-1. Access API `http://localhost:5000/api`
 1. Access Client `http://localhost:3000`
