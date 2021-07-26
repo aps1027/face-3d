@@ -9,14 +9,3 @@ services:
     volumes:
       - ./client:/work
     command: /bin/sh -c "yarn install && yarn serve"
-  server:
-    build:
-      context: ./server
-    container_name: face3d-server
-    working_dir: /work
-    ports:
-      - 5000:5000
-      - 9229:9229
-    volumes:
-      - ./server:/work
-    command: denon run --allow-net --allow-write --allow-read --allow-env --allow-plugin --unstable  server.ts

@@ -12,7 +12,7 @@
     />
     <Object3D :modelList="modelList" @get-model="getModel" />
     <ColorPalette
-      v-if="this.switchItem"
+      v-if="switchItem"
       :colorItemList="colorList"
       :showFullImage="showFullImage"
       @get-color="getColor"
@@ -120,7 +120,7 @@ import ObjectSideBar from "./ObjectSideBar.vue";
 import Object3D from "./3DObject.vue";
 import ProgressLoading from "./ProgressLoading.vue";
 import RoomDimension from "./RoomDimension.vue";
-import constants from "../constants";
+import db from "../Firebase";
 
 let container;
 let scene;
@@ -167,7 +167,7 @@ export default {
       thinkness: 0.5,
       scale: 0.5,
       colorList: [],
-      modelList: constants.MODEL_LIST,
+      modelList: [],
       switchItem: null,
       uploadedModelMap: {},
       hideAdjustmentPanel: true,
@@ -1070,7 +1070,15 @@ export default {
   },
   created() {
     rotateRoom = true;
-  }
+  },
+  async beforeMount() {
+    const modelList = [];
+    const snapshot = await db.collection("models").get();
+    snapshot.forEach((doc) => {
+      modelList.push(doc.data()[Object.keys(doc.data())[0]]);
+    });
+    this.modelList = modelList;
+  },
 };
 </script>
 <style scoped lang="postcss">
