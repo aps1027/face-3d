@@ -106,6 +106,12 @@
         </div>
       </div>
     </div>
+    <div
+      class="xs:w-12 xs:h-12 xs:p-1 xs:py-3 fix-save-btn save-btn w-20 h-20 p-4 py-6"
+      @click="saveModel()"
+    >
+      SAVE
+    </div>
     <div ref="container" class="w-screen h-screen min-size"></div>
   </div>
 </template>
@@ -121,6 +127,7 @@ import Object3D from "./3DObject.vue";
 import ProgressLoading from "./ProgressLoading.vue";
 import RoomDimension from "./RoomDimension.vue";
 import db from "../Firebase";
+import router from "../router/index.js";
 
 let container;
 let scene;
@@ -173,6 +180,8 @@ export default {
       hideAdjustmentPanel: true,
       hideColorPanel: true,
       selectedObj: null,
+
+      // saved data
       roomDimension: null,
       range: {
         x: {
@@ -190,6 +199,23 @@ export default {
       },
       modelDesign: [],
       showLoading: false,
+      // saved data
+
+      materialItemsInfo: {
+        wall: null,
+        floor: null,
+        door: null,
+        window: null,
+      },
+
+      // saved data
+      modelsInfo: {
+        bed: {},
+        sofa: {},
+        table: {},
+        cabinet: {},
+        chair: {},
+      },
     };
   },
   computed: {
@@ -221,31 +247,97 @@ export default {
     adjustmentResult: {
       deep: true,
       handler() {
-        if (this.selectedObj.name == "bed") {
-          bedModel.position.x = this.adjustmentResult.position.x;
-          bedModel.position.z = this.adjustmentResult.position.z;
-          bedModel.rotation.y = this.adjustmentResult.rotation.y;
-        } else if (this.selectedObj.name == "sofa") {
-          sofaModel.position.x = this.adjustmentResult.position.x;
-          sofaModel.position.z = this.adjustmentResult.position.z;
-          sofaModel.rotation.y = this.adjustmentResult.rotation.y;
-        } else if (this.selectedObj.name == "table") {
-          tableModel.position.x = this.adjustmentResult.position.x;
-          tableModel.position.z = this.adjustmentResult.position.z;
-          tableModel.rotation.y = this.adjustmentResult.rotation.y;
-        } else if (this.selectedObj.name == "cabinet") {
-          cabinetModel.position.x = this.adjustmentResult.position.x;
-          cabinetModel.position.z = this.adjustmentResult.position.z;
-          cabinetModel.rotation.y = this.adjustmentResult.rotation.y;
-        } else if (this.selectedObj.name == "chair") {
-          chairModel.position.x = this.adjustmentResult.position.x;
-          chairModel.position.z = this.adjustmentResult.position.z;
-          chairModel.rotation.y = this.adjustmentResult.rotation.y;
+        this.setModelAdjustment(this.selectedObj.name, this.adjustmentResult);
+        this.modelsInfo[this.selectedObj.name][
+          "adjustmentResult"
+        ] = this.adjustmentResult;
+      },
+    },
+    roomDimension: {
+      deep: true,
+      handler() {
+        rotateRoom = !this.roomDimension;
+        this.roomLength = this.roomDimension.length;
+        this.roomWidth = this.roomDimension.width;
+
+        let tmpGroup = scene.getObjectByName("room-group");
+        if (tmpGroup) {
+          scene.remove(tmpGroup);
+        }
+        this.createWalls();
+        this.createFloor();
+        this.createDoor();
+        this.createWindow();
+        this.groupInitRoomItems();
+      },
+    },
+    materialItemsInfo: {
+      deep: true,
+      handler() {
+        if (this.materialItemsInfo.wall) {
+          this.changeWallColor(this.materialItemsInfo.wall);
+        }
+        if (this.materialItemsInfo.floor) {
+          this.changeFloorColor(this.materialItemsInfo.floor);
+        }
+        if (this.materialItemsInfo.door) {
+          this.changeDoor(this.materialItemsInfo.door);
+        }
+        if (this.materialItemsInfo.window) {
+          this.changeWindow(this.materialItemsInfo.window);
         }
       },
     },
   },
   methods: {
+    /**
+     * This is to save room model information into firebase.
+     * @returns redirect to Home page
+     */
+    saveModel() {
+      const roomName = prompt("Add Room Name: ");
+      const room = {
+        name: roomName,
+        dimension: this.roomDimension,
+        materialItems: this.materialItemsInfo,
+        models: this.modelsInfo,
+      };
+      this.showLoading = true;
+      db.collection("rooms")
+        .add(room)
+        .then(() => {
+          router.push({ name: "Home"});
+        });
+    },
+
+    /**
+     * This is to set model adjustment (e.g. x,y, rotation).
+     * @param {string} modelName model name (e.g. bed, sofa)
+     * @param {object} adjustmentResult adjustmentResult (e.g. x,y, rotation)
+     */
+    setModelAdjustment(modelName, adjustmentResult) {
+      if (modelName == "bed") {
+        bedModel.position.x = adjustmentResult.position.x;
+        bedModel.position.z = adjustmentResult.position.z;
+        bedModel.rotation.y = adjustmentResult.rotation.y;
+      } else if (modelName == "sofa") {
+        sofaModel.position.x = adjustmentResult.position.x;
+        sofaModel.position.z = adjustmentResult.position.z;
+        sofaModel.rotation.y = adjustmentResult.rotation.y;
+      } else if (modelName == "table") {
+        tableModel.position.x = adjustmentResult.position.x;
+        tableModel.position.z = adjustmentResult.position.z;
+        tableModel.rotation.y = adjustmentResult.rotation.y;
+      } else if (modelName == "cabinet") {
+        cabinetModel.position.x = adjustmentResult.position.x;
+        cabinetModel.position.z = adjustmentResult.position.z;
+        cabinetModel.rotation.y = adjustmentResult.rotation.y;
+      } else if (modelName == "chair") {
+        chairModel.position.x = adjustmentResult.position.x;
+        chairModel.position.z = adjustmentResult.position.z;
+        chairModel.rotation.y = adjustmentResult.rotation.y;
+      }
+    },
     /**
      * This is to change model color or design.
      * @param {object} design design object including mesh names and color list
@@ -253,26 +345,33 @@ export default {
      * @returns void
      */
     changeModelColor(design, color) {
+      this.modelsInfo[this.selectedObj.name][design.name] = color;
+      let model = null;
       if (this.selectedObj.name == "bed") {
-        this.setModelMaterial(bedModel, design.meshNameList, color);
+        model = bedModel;
       } else if (this.selectedObj.name == "sofa") {
-        this.setModelMaterial(sofaModel, design.meshNameList, color);
+        model = sofaModel;
       } else if (this.selectedObj.name == "table") {
-        this.setModelMaterial(tableModel, design.meshNameList, color);
+        model = tableModel;
       } else if (this.selectedObj.name == "cabinet") {
-        this.setModelMaterial(cabinetModel, design.meshNameList, color);
+        model = cabinetModel;
       } else if (this.selectedObj.name == "chair") {
-        this.setModelMaterial(chairModel, design.meshNameList, color);
+        model = chairModel;
       }
+      this.setModelMaterial(model, this.selectedObj.name, design.name, color);
     },
     /**
      * This is to set new model material.
      * @param {object} model specific model to change design
-     * @param {object} meshNameList mesh names
+     * @param {object} modelName model name
+     * @param {object} partName part name
      * @param {object} color specific color to change
      * @returns void
      */
-    setModelMaterial(model, meshNameList, color) {
+    setModelMaterial(model, modelName, partName, color) {
+      const meshNameList = this.uploadedModelMap[modelName].model.color.find(
+        (color) => color.name === partName
+      ).meshNameList;
       model.traverse((o) => {
         let texture = new THREE.TextureLoader().load(
           this.getSrc(color.texture)
@@ -415,13 +514,13 @@ export default {
      */
     getColor(colorItem) {
       if (this.switchItem.name == "wall") {
-        this.changeWallColor(colorItem);
+        this.materialItemsInfo.wall = colorItem;
       } else if (this.switchItem.name == "floor") {
-        this.changeFloorColor(colorItem);
+        this.materialItemsInfo.floor = colorItem;
       } else if (this.switchItem.name == "door") {
-        this.changeDoor(colorItem);
+        this.materialItemsInfo.door = colorItem;
       } else if (this.switchItem.name == "window") {
-        this.changeWindow(colorItem);
+        this.materialItemsInfo.window = colorItem;
       }
     },
 
@@ -504,6 +603,7 @@ export default {
      */
     addUploadedModel(modelItem) {
       this.uploadedModelMap[modelItem.name] = modelItem;
+      this.modelsInfo[modelItem.name]["id"] = modelItem.model.id;
     },
 
     /**
@@ -523,19 +623,6 @@ export default {
      */
     getRoomDimension(dimension) {
       this.roomDimension = dimension;
-      rotateRoom = !this.roomDimension;
-      this.roomLength = this.roomDimension.length;
-      this.roomWidth = this.roomDimension.width;
-
-      let tmpGroup = scene.getObjectByName("room-group");
-      if (tmpGroup) {
-        scene.remove(tmpGroup);
-      }
-      this.createWalls();
-      this.createFloor();
-      this.createDoor();
-      this.createWindow();
-      this.groupInitRoomItems();
     },
 
     /**
@@ -577,7 +664,7 @@ export default {
       /**
        * This is animation function.
        */
-      const animate = function () {
+      const animate = function() {
         requestAnimationFrame(animate);
         controls.update();
         renderer.render(scene, camera);
@@ -1122,6 +1209,23 @@ export default {
   min-height: 560px;
 }
 
+.fix-save-btn {
+  @apply absolute;
+  bottom: 3rem;
+  right: 6rem;
+}
+
+.save-btn {
+  @apply cursor-pointer border-solid border-2 border-white bg-white rounded-full;
+  font-size: 19px;
+  font-weight: bolder;
+  color: #319795;
+}
+
+.save-btn:hover {
+  @apply border-teal-600 bg-gray-400;
+}
+
 @media (min-width: 300px) and (max-width: 639px) {
   .panel-left {
     left: 50%;
@@ -1132,6 +1236,10 @@ export default {
   .panel-right {
     right: 50%;
     transform: translateX(50%);
+  }
+  .save-btn {
+    font-size: 14px;
+    right: 2rem;
   }
 }
 </style>
