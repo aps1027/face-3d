@@ -15,7 +15,8 @@
   </div>
 </template>
 <script>
-import db from "../Firebase";
+import constants from '../constants';
+import db from "../firebase/Firestore";
 export default {
   name: "SideTabBar",
   data() {
@@ -46,7 +47,7 @@ export default {
   },
   async beforeMount() {
     const materialItemList = [];
-    const snapshot = await db.collection("material-items").get();
+    const snapshot = await db.collection(constants.FIREBASE.DB_NAME.MATERIAL_ITEM).get();
     snapshot.forEach((doc) => {
       materialItemList.push(doc.data()[Object.keys(doc.data())[0]]);
     });

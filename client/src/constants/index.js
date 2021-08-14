@@ -1,5 +1,15 @@
 const constants = {
- // add in here
+    LATEST_ROOM_COUNT: 6,
+    FIREBASE : {
+        DB_NAME: {
+            MODEL: 'models',
+            MATERIAL_ITEM: 'material-items',
+            ROOM: "rooms",
+        },
+        STORAGE_PATH: {
+            ROOM: "rooms",
+        }
+    }
 };
 
 export default constants;

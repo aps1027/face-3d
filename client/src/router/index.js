@@ -3,6 +3,7 @@ import Home from "../views/Home.vue";
 import About from "../views/About.vue";
 import NotFound from "../views/NotFound.vue";
 import CreateRoom from "../views/CreateRoom.vue";
+import ShowRoom from "../views/ShowRoom.vue";
 
 const routes = [
   {
@@ -16,9 +17,14 @@ const routes = [
     component: About,
   },
   {
-    path: "/create-room",
+    path: "/room/create",
     name: "CreateRoom",
     component: CreateRoom,
+  },
+  {
+    path: "/room",
+    name: "ShowRoom",
+    component: ShowRoom,
   },
   {
     path: "/:catchAll(.*)",

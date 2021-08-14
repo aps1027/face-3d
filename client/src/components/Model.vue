@@ -126,8 +126,10 @@ import ObjectSideBar from "./ObjectSideBar.vue";
 import Object3D from "./3DObject.vue";
 import ProgressLoading from "./ProgressLoading.vue";
 import RoomDimension from "./RoomDimension.vue";
-import db from "../Firebase";
-import router from "../router/index.js";
+import db from "../firebase/Firestore";
+import storage from "../firebase/Firestorage";
+import router from "../router";
+import constants from "../constants";
 
 let container;
 let scene;
@@ -295,19 +297,36 @@ export default {
      * @returns redirect to Home page
      */
     saveModel() {
+      // reset room position
+      camera.position.set(4, 10, 10);
       const roomName = prompt("Add Room Name: ");
-      const room = {
-        name: roomName,
-        dimension: this.roomDimension,
-        materialItems: this.materialItemsInfo,
-        models: this.modelsInfo,
-      };
-      this.showLoading = true;
-      db.collection("rooms")
-        .add(room)
-        .then(() => {
-          router.push({ name: "Home"});
-        });
+      if (roomName) {
+        const room = {
+          name: roomName,
+          dimension: this.roomDimension,
+          materialItems: this.materialItemsInfo,
+          models: this.modelsInfo,
+          createdAt: Date.now(),
+          modifiedAt: Date.now(),
+        };
+        this.showLoading = true;
+        db.collection(constants.FIREBASE.DB_NAME.ROOM)
+          .add(room)
+          .then((doc) => {
+            const imgData = renderer.domElement
+              .toDataURL("image/png")
+              .split(",")[1];
+            storage
+              .ref(constants.FIREBASE.STORAGE_PATH.ROOM)
+              .child(`${doc.id}.png`)
+              .putString(imgData, "base64")
+              .then(() => {
+                router.push({ name: "Home" });
+              });
+          });
+      } else {
+        alert("Please add room name. Save Again.");
+      }
     },
 
     /**
@@ -716,7 +735,8 @@ export default {
       const mainLight = new THREE.DirectionalLight(0xffffff, 2);
       mainLight.position.set(10, 10, 10);
 
-      scene.add(ambientLight, mainLight);
+      camera.add(ambientLight, mainLight);
+      scene.add(camera);
     },
 
     /**
@@ -1143,7 +1163,10 @@ export default {
      * @returns void
      */
     createRenderer() {
-      renderer = new THREE.WebGLRenderer({ antialias: true });
+      renderer = new THREE.WebGLRenderer({
+        antialias: true,
+        preserveDrawingBuffer: true,
+      });
       renderer.setSize(container.clientWidth, container.clientHeight);
 
       renderer.setPixelRatio(window.devicePixelRatio);
@@ -1160,7 +1183,7 @@ export default {
   },
   async beforeMount() {
     const modelList = [];
-    const snapshot = await db.collection("models").get();
+    const snapshot = await db.collection(constants.FIREBASE.DB_NAME.MODEL).get();
     snapshot.forEach((doc) => {
       modelList.push(doc.data()[Object.keys(doc.data())[0]]);
     });
