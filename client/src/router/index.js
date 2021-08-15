@@ -4,6 +4,7 @@ import About from "../views/About.vue";
 import NotFound from "../views/NotFound.vue";
 import CreateRoom from "../views/CreateRoom.vue";
 import ShowRoom from "../views/ShowRoom.vue";
+import EditRoom from "../views/EditRoom.vue";
 
 const routes = [
   {
@@ -25,6 +26,11 @@ const routes = [
     path: "/room",
     name: "ShowRoom",
     component: ShowRoom,
+  },
+  {
+    path: "/room/:id/edit",
+    name: "EditRoom",
+    component: EditRoom,
   },
   {
     path: "/:catchAll(.*)",

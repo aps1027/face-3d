@@ -1,7 +1,7 @@
 <template>
   <div>
     <RoomDimension
-      v-if="!roomDimension"
+      v-if="!roomId && !roomDimension"
       @get-room-dimension="getRoomDimension"
     />
     <ProgressLoading v-if="showLoading" />
@@ -155,6 +155,7 @@ let commonWallMaterial;
 let rotateRoom = true;
 
 export default {
+  props: ["roomId"],
   components: {
     SideTabBar,
     ColorPalette,
@@ -250,9 +251,18 @@ export default {
       deep: true,
       handler() {
         this.setModelAdjustment(this.selectedObj.name, this.adjustmentResult);
+        const tmpResult = {
+          position: {
+            x: this.adjustmentResult.position.x,
+            z: this.adjustmentResult.position.z,
+          },
+          rotation: {
+            y: this.adjustmentResult.rotation.y
+          }
+        }
         this.modelsInfo[this.selectedObj.name][
           "adjustmentResult"
-        ] = this.adjustmentResult;
+        ] = tmpResult;
       },
     },
     roomDimension: {
@@ -297,8 +307,6 @@ export default {
      * @returns redirect to Home page
      */
     saveModel() {
-      // reset room position
-      camera.position.set(4, 10, 10);
       const roomName = prompt("Add Room Name: ");
       if (roomName) {
         const room = {
@@ -309,21 +317,28 @@ export default {
           createdAt: Date.now(),
           modifiedAt: Date.now(),
         };
+        // reset room position
+        camera.position.set(7.7, 10.5, 7.5);
         this.showLoading = true;
-        db.collection(constants.FIREBASE.DB_NAME.ROOM)
-          .add(room)
-          .then((doc) => {
-            const imgData = renderer.domElement
-              .toDataURL("image/png")
-              .split(",")[1];
-            storage
-              .ref(constants.FIREBASE.STORAGE_PATH.ROOM)
-              .child(`${doc.id}.png`)
-              .putString(imgData, "base64")
-              .then(() => {
-                router.push({ name: "Home" });
+        setTimeout(() => {
+          const imgData = renderer.domElement
+            .toDataURL("image/png")
+            .split(",")[1];
+          storage
+            .ref(constants.FIREBASE.STORAGE_PATH.ROOM)
+            .child(`room_${Date.now()}.png`)
+            .putString(imgData, "base64")
+            .then((snapshot) => {
+              snapshot.ref.getDownloadURL().then((url) => {
+                room["imageUrl"] = url;
+                db.collection(constants.FIREBASE.DB_NAME.ROOM)
+                  .add(room)
+                  .then(() => {
+                    router.push({ name: "Home" });
+                  });
               });
-          });
+            });
+        }, 1000);
       } else {
         alert("Please add room name. Save Again.");
       }
@@ -742,9 +757,10 @@ export default {
     /**
      * This is to upload bed model.
      * @param {object} bedItem bed item
+     * @param {boolean} showLoading loading hide or show
      * @returns void
      */
-    uploadBedModel(bedItem) {
+    uploadBedModel(bedItem, showLoading = false) {
       this.showLoading = true;
       let tmpBedModel = scene.getObjectByName("bed");
       if (tmpBedModel) {
@@ -780,7 +796,7 @@ export default {
           }
           // Add the model to the scene
           scene.add(bedModel);
-          this.showLoading = false;
+          this.showLoading = showLoading;
         },
         undefined,
         (error) => {
@@ -791,9 +807,10 @@ export default {
     /**
      * This is to upload sofa model.
      * @param {object} sofaItem sofa model
+     * @param {boolean} showLoading loading hide or show
      * @returns void
      */
-    uploadSofaModel(sofaItem) {
+    uploadSofaModel(sofaItem, showLoading = false) {
       this.showLoading = true;
       let tmpSofaModel = scene.getObjectByName("sofa");
       if (tmpSofaModel) {
@@ -834,7 +851,7 @@ export default {
 
           // Add the model to the scene
           scene.add(sofaModel);
-          this.showLoading = false;
+          this.showLoading = showLoading;
         },
         undefined,
         (error) => {
@@ -846,9 +863,10 @@ export default {
     /**
      * This is to upload table model.
      * @param {object} tableItem table model
+     * @param {boolean} showLoading loading hide or show
      * @returns void
      */
-    uploadTableModel(tableItem) {
+    uploadTableModel(tableItem, showLoading = false) {
       this.showLoading = true;
       let tmpTableModel = scene.getObjectByName("table");
       if (tmpTableModel) {
@@ -889,7 +907,7 @@ export default {
 
           // Add the model to the scene
           scene.add(tableModel);
-          this.showLoading = false;
+          this.showLoading = showLoading;
         },
         undefined,
         (error) => {
@@ -901,9 +919,10 @@ export default {
     /**
      * This is to upload cabinet model.
      * @param {object} cabinetItem cabinet model
+     * @param {boolean} showLoading loading hide or show
      * @returns void
      */
-    uploadCabinetModel(cabinetItem) {
+    uploadCabinetModel(cabinetItem, showLoading = false) {
       this.showLoading = true;
       let tmpCabinetModel = scene.getObjectByName("cabinet");
       if (tmpCabinetModel) {
@@ -948,7 +967,7 @@ export default {
 
           // Add the model to the scene
           scene.add(cabinetModel);
-          this.showLoading = false;
+          this.showLoading = showLoading;
         },
         undefined,
         (error) => {
@@ -960,9 +979,10 @@ export default {
     /**
      * This is to upload chair model.
      * @param {object} chairItem chair model
+     * @param {boolean} showLoading loading hide or show
      * @returns void
      */
-    uploadChairModel(chairItem) {
+    uploadChairModel(chairItem, showLoading = false) {
       this.showLoading = true;
       let tmpChairModel = scene.getObjectByName("chair");
       if (tmpChairModel) {
@@ -1003,7 +1023,7 @@ export default {
 
           // Add the model to the scene
           scene.add(chairModel);
-          this.showLoading = false;
+          this.showLoading = showLoading;
         },
         undefined,
         (error) => {
@@ -1174,6 +1194,118 @@ export default {
       renderer.physicallyCorrectLights = true;
       container.appendChild(renderer.domElement);
     },
+
+    /**
+     * This is preparation for edited room.
+     */
+    prepareEditedRoom() {
+      if (this.modelsInfo.bed.id) {
+        const bedItem = this.modelList.find((item) => item.name == "bed");
+        let modelBedItem = {
+          id: bedItem.id,
+          name: bedItem.name,
+          icon: bedItem.icon,
+          model: bedItem.list.find((mdl) => mdl.id == this.modelsInfo.bed.id),
+        };
+        this.uploadBedModel(modelBedItem.model, true);
+        this.addUploadedModel(modelBedItem);
+      }
+
+      if (this.modelsInfo.table.id) {
+        const tableItem = this.modelList.find((item) => item.name == "table");
+        let modelTableItem = {
+          id: tableItem.id,
+          name: tableItem.name,
+          icon: tableItem.icon,
+          model: tableItem.list.find(
+            (mdl) => mdl.id == this.modelsInfo.table.id
+          ),
+        };
+        this.uploadTableModel(modelTableItem.model, true);
+        this.addUploadedModel(modelTableItem);
+      }
+
+      if (this.modelsInfo.chair.id) {
+        const chairItem = this.modelList.find((item) => item.name == "chair");
+        let modelChairItem = {
+          id: chairItem.id,
+          name: chairItem.name,
+          icon: chairItem.icon,
+          model: chairItem.list.find(
+            (mdl) => mdl.id == this.modelsInfo.chair.id
+          ),
+        };
+        this.uploadChairModel(modelChairItem.model, true);
+        this.addUploadedModel(modelChairItem);
+      }
+
+      if (this.modelsInfo.cabinet.id) {
+        const cabinetItem = this.modelList.find(
+          (item) => item.name == "cabinet"
+        );
+        let modelCabinetItem = {
+          id: cabinetItem.id,
+          name: cabinetItem.name,
+          icon: cabinetItem.icon,
+          model: cabinetItem.list.find(
+            (mdl) => mdl.id == this.modelsInfo.cabinet.id
+          ),
+        };
+        this.uploadCabinetModel(modelCabinetItem.model, true);
+        this.addUploadedModel(modelCabinetItem);
+      }
+
+      if (this.modelsInfo.sofa.id) {
+        const sofaItem = this.modelList.find((item) => item.name == "sofa");
+        let modelSofaItem = {
+          id: sofaItem.id,
+          name: sofaItem.name,
+          icon: sofaItem.icon,
+          model: sofaItem.list.find((mdl) => mdl.id == this.modelsInfo.sofa.id),
+        };
+        this.uploadSofaModel(modelSofaItem.model, true);
+        this.addUploadedModel(modelSofaItem);
+      }
+
+      setTimeout(() => {
+        for (let modelName in this.modelsInfo) {
+          for (let part in this.modelsInfo[modelName]) {
+            if (part === "id") {
+              continue;
+            }
+            if (part === "adjustmentResult") {
+              if (this.modelsInfo[modelName][part]) {
+                this.setModelAdjustment(
+                  modelName,
+                  this.modelsInfo[modelName][part]
+                );
+              }
+              continue;
+            }
+            let model = null;
+            if (modelName == "bed") {
+              model = bedModel;
+            } else if (modelName == "sofa") {
+              model = sofaModel;
+            } else if (modelName == "table") {
+              model = tableModel;
+            } else if (modelName == "cabinet") {
+              model = cabinetModel;
+            } else if (modelName == "chair") {
+              model = chairModel;
+            }
+            this.setModelMaterial(
+              model,
+              modelName,
+              part,
+              this.modelsInfo[modelName][part]
+            );
+          }
+        }
+
+        this.showLoading = false;
+      }, 2000);
+    },
   },
   mounted() {
     this.init();
@@ -1182,12 +1314,32 @@ export default {
     rotateRoom = true;
   },
   async beforeMount() {
+    this.showLoading = this.roomId ? true : false;
     const modelList = [];
-    const snapshot = await db.collection(constants.FIREBASE.DB_NAME.MODEL).get();
+    const snapshot = await db
+      .collection(constants.FIREBASE.DB_NAME.MODEL)
+      .get();
     snapshot.forEach((doc) => {
       modelList.push(doc.data()[Object.keys(doc.data())[0]]);
     });
     this.modelList = modelList;
+
+    if (this.roomId) {
+      const roomSnap = await db
+        .collection(constants.FIREBASE.DB_NAME.ROOM)
+        .doc(this.roomId)
+        .get();
+      if (!roomSnap.exists) {
+        router.push({ name: "Home" });
+      }
+      const roomData = roomSnap.data();
+
+      this.roomDimension = roomData.dimension;
+      this.materialItemsInfo = roomData.materialItems;
+      this.modelsInfo = roomData.models;
+
+      this.prepareEditedRoom();
+    }
   },
 };
 </script>

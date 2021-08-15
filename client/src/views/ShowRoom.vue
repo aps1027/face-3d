@@ -1,15 +1,23 @@
 <template>
   <div class="center-container">
     <div>
-      <h1 class="text-6xl font-bold">Latest Rooms</h1>
+      <h1 class="text-6xl font-bold leading-none">Latest Rooms</h1>
       <p>Let's build your desired 3D room based on your idea.</p>
     </div>
     <div class="pt-6 grid grid-cols-3 gap-8 xs:grid-cols-1">
-      <div 
-      v-for="latestRoom in latestRoomList"
-      :key="latestRoom.id"
-      class="bg-gray-100 shadow-md rounded p-3">
-        <div class="min-size"></div>
+      <div
+        v-for="latestRoom in latestRoomList"
+        :key="latestRoom.id"
+        class="relative room-card"
+        style="background: #efefef;"
+      >
+        <div class="bg-teal-600 absolute w-full text-white text-left p-2">
+          {{ latestRoom.name }}
+        </div>
+        <div class="min-size">
+          <img :src="latestRoom.imageUrl" alt="Room image" />
+        </div>
+        <a :href="prepareEditRoute(latestRoom.id)" class="edit-btn">Edit→</a>
       </div>
     </div>
   </div>
@@ -26,6 +34,15 @@ export default {
       latestRoomList: [],
     };
   },
+  computed: {
+    /**
+     * This is to prepare edit route.
+     * @returns {string} route
+     */
+    prepareEditRoute() {
+      return (id) => `/room/${id}/edit`;
+    },
+  },
   async beforeMount() {
     const latestRoomList = [];
     const snapshot = await db
@@ -39,13 +56,12 @@ export default {
       latestRoomList.push(room);
     });
     this.latestRoomList = latestRoomList;
-    console.log(this.latestRoomList);
   },
 };
 </script>
 <style scoped lang="postcss">
 .center-container {
-  top: 50px;
+  top: 17%;
   right: 50%;
   transform: translate(50%, 0%);
   position: absolute;
@@ -56,5 +72,24 @@ export default {
 .min-size {
   max-width: 100%;
   min-height: 250px;
+}
+
+.min-size img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+}
+
+.edit-btn {
+  color: teal;
+  font-size: 18px;
+  position: absolute;
+  height: 30px;
+  bottom: 5px;
+  cursor: pointer;
+  right: 20px;
+}
+.edit-btn:hover {
+  color: #fff;
 }
 </style>
