@@ -6,12 +6,12 @@
     </div>
     <div class="pt-6">
       <router-link
-        to="/create-room"
+        to="/room/create"
         class="m-1 bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 border border-teal-700 rounded"
         >New room</router-link
       >
       <router-link
-        to="/"
+        to="/room"
         class="m-1 bg-transparent hover:bg-teal-500 text-teal-600 font-semibold hover:text-white py-2 px-4 border border-teal-500 hover:border-transparent rounded"
         >Already have one</router-link
       >

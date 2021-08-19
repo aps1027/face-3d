@@ -73,4 +73,9 @@ module.exports = {
       msTileImage: "./logo.png",
     },
   },
+  devServer: {
+    watchOptions: {
+      poll: true,
+    },
+  },
 };

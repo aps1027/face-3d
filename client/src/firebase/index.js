@@ -1,5 +1,6 @@
 import firebase from 'firebase/app';
 import 'firebase/firestore';
+import 'firebase/storage';
 
 // add file store config
 const config = {
@@ -11,7 +12,7 @@ const config = {
     appId: process.env.VUE_APP_FIREBASE_APP_ID,
     measurementId: process.env.VUE_APP_FIREBASE_MEASUREMENT_ID
 };
-firebase.initializeApp(config);
-const db = firebase.firestore();
 
-export default db;
+firebase.initializeApp(config);
+
+export default firebase;
