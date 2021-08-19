@@ -1,9 +1,9 @@
 <template>
-  <div class="w-screen h-screen absolute z-50 bg-gray-500 opacity-75">
+  <div class="w-screen h-screen absolute z-50 bg-gray-500 bg-opacity-75">
     <div class="wide-form">
       <div class="w-full max-w-xs">
         <form
-          class="bg-white shadow-md rounded px-8 pt-6 pb-6"
+          class="bg-white shadow-md rounded px-8 pt-6 pb-6 bg-opacity-75"
           @submit.prevent="sendRoomDimension"
         >
           <div>
@@ -57,7 +57,7 @@
           </div>
           <div class="flex items-center justify-between">
             <button
-              class="w-full bg-teal-600 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              class="w-full bg-teal-600 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline border border-teal-500"
               type="submit"
             >
               Submit

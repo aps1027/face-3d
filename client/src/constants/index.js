@@ -1,5 +1,5 @@
 const constants = {
-    LATEST_ROOM_COUNT: 6,
+    LATEST_ROOM_COUNT: 18,
     FIREBASE : {
         DB_NAME: {
             MODEL: 'models',

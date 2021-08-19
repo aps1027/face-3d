@@ -4,6 +4,11 @@
       v-if="!roomId && !roomDimension"
       @get-room-dimension="getRoomDimension"
     />
+    <RoomSubmit
+      v-if="showRoomSubmit"
+      @get-room-detail="getRoomDetail"
+      @cancel-room-detail="cancelRoomDetail"
+    />
     <ProgressLoading v-if="showLoading" />
     <SideTabBar @get-switch="getSwitch" />
     <ObjectSideBar
@@ -107,7 +112,7 @@
       </div>
     </div>
     <div
-      class="xs:w-12 xs:h-12 xs:p-1 xs:py-3 fix-save-btn save-btn w-20 h-20 p-4 py-6"
+      class="xs:w-12 xs:h-12 xs:p-1 xs:py-3 fix-save-btn save-btn text-center w-20 h-20 p-4 py-6 bg-transparent hover:bg-teal-500 text-teal-600 font-semibold hover:text-white border border-teal-500 hover:border-transparent"
       @click="saveModel()"
     >
       SAVE
@@ -126,6 +131,7 @@ import ObjectSideBar from "./ObjectSideBar.vue";
 import Object3D from "./3DObject.vue";
 import ProgressLoading from "./ProgressLoading.vue";
 import RoomDimension from "./RoomDimension.vue";
+import RoomSubmit from "./RoomSubmit.vue";
 import db from "../firebase/Firestore";
 import storage from "../firebase/Firestorage";
 import router from "../router";
@@ -163,6 +169,7 @@ export default {
     ObjectSideBar,
     ProgressLoading,
     RoomDimension,
+    RoomSubmit,
   },
   data() {
     return {
@@ -183,6 +190,8 @@ export default {
       hideAdjustmentPanel: true,
       hideColorPanel: true,
       selectedObj: null,
+      showRoomSubmit: false,
+      roomName: "",
 
       // saved data
       roomDimension: null,
@@ -257,12 +266,10 @@ export default {
             z: this.adjustmentResult.position.z,
           },
           rotation: {
-            y: this.adjustmentResult.rotation.y
-          }
-        }
-        this.modelsInfo[this.selectedObj.name][
-          "adjustmentResult"
-        ] = tmpResult;
+            y: this.adjustmentResult.rotation.y,
+          },
+        };
+        this.modelsInfo[this.selectedObj.name]["adjustmentResult"] = tmpResult;
       },
     },
     roomDimension: {
@@ -303,14 +310,23 @@ export default {
   },
   methods: {
     /**
-     * This is to save room model information into firebase.
-     * @returns redirect to Home page
+     * This is cancelling room detail submit.
+     * @param Object obj
      */
-    saveModel() {
-      const roomName = prompt("Add Room Name: ");
-      if (roomName) {
+    cancelRoomDetail(obj) {
+      this.showRoomSubmit = obj.showRoomSubmit;
+    },
+
+    /**
+     * Getting room detail and save room.
+     * @param Object room
+     */
+    getRoomDetail(room) {
+      this.showRoomSubmit = false;
+      this.roomName = room.name;
+      if (this.roomName) {
         const room = {
-          name: roomName,
+          name: this.roomName,
           dimension: this.roomDimension,
           materialItems: this.materialItemsInfo,
           models: this.modelsInfo,
@@ -339,9 +355,14 @@ export default {
               });
             });
         }, 1000);
-      } else {
-        alert("Please add room name. Save Again.");
       }
+    },
+    /**
+     * This is to save room model information into firebase.
+     * @returns show room submit form
+     */
+    saveModel() {
+      this.showRoomSubmit = true;
     },
 
     /**
@@ -1391,14 +1412,10 @@ export default {
 }
 
 .save-btn {
-  @apply cursor-pointer border-solid border-2 border-white bg-white rounded-full;
+  @apply cursor-pointer rounded-full;
   font-size: 19px;
   font-weight: bolder;
   color: #319795;
-}
-
-.save-btn:hover {
-  @apply border-teal-600 bg-gray-400;
 }
 
 @media (min-width: 300px) and (max-width: 639px) {
