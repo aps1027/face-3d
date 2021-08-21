@@ -6,6 +6,7 @@ module.exports = {
     appleMobileWebAppCapable: "yes",
     appleMobileWebAppStatusBarStyle: "black",
     workboxOptions: {
+      skipWaiting: true,
       exclude: [/\.map$/, /_redirects/],
     },
     manifestOptions: {
