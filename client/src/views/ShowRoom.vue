@@ -17,7 +17,7 @@
         <div class="min-size">
           <img :src="latestRoom.imageUrl" alt="Room image" />
         </div>
-        <a :href="prepareEditRoute(latestRoom.id)" class="edit-btn">Edit→</a>
+        <a :href="prepareEditRoute(latestRoom.id)" class="edit-btn">Edit&#8594;</a>
       </div>
     </div>
   </div>
@@ -90,6 +90,6 @@ export default {
   right: 20px;
 }
 .edit-btn:hover {
-  color: #fff;
+  opacity: 0.5;
 }
 </style>

@@ -333,8 +333,14 @@ export default {
           createdAt: Date.now(),
           modifiedAt: Date.now(),
         };
+
         // reset room position
-        camera.position.set(7.7, 10.5, 7.5);
+        controls.reset();
+        camera.aspect = 972 / 657;
+        camera.updateProjectionMatrix();
+        renderer.setSize(972, 657);
+        camera.position.set(7.13, 5.35, 7);
+
         this.showLoading = true;
         setTimeout(() => {
           const imgData = renderer.domElement
@@ -350,7 +356,7 @@ export default {
                 db.collection(constants.FIREBASE.DB_NAME.ROOM)
                   .add(room)
                   .then(() => {
-                    router.push({ name: "Home" });
+                    router.push({ name: "ShowRoom" });
                   });
               });
             });

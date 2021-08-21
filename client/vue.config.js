@@ -79,4 +79,5 @@ module.exports = {
       poll: true,
     },
   },
+  productionSourceMap: false,
 };
