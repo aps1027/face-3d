@@ -1,7 +1,7 @@
 <template>
   <div class="center-container">
     <div>
-      <h1 class="text-6xl font-bold">Welcome!</h1>
+      <h1 class="text-6xl font-bold">Test Cache Clear!</h1>
       <p>Let's build your desired 3D room based on your idea.</p>
     </div>
     <div class="pt-6">
