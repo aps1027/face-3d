@@ -333,6 +333,7 @@ export default {
           createdAt: Date.now(),
           modifiedAt: Date.now(),
         };
+        this.showLoading = true;
 
         // reset room position
         controls.reset();
@@ -340,8 +341,6 @@ export default {
         camera.updateProjectionMatrix();
         renderer.setSize(972, 657);
         camera.position.set(7.13, 5.35, 7);
-
-        this.showLoading = true;
         setTimeout(() => {
           const imgData = renderer.domElement
             .toDataURL("image/png")
@@ -360,7 +359,7 @@ export default {
                   });
               });
             });
-        }, 50);
+        }, 1);
       }
     },
     /**
