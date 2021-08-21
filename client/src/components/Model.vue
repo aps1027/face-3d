@@ -424,9 +424,10 @@ export default {
      * @returns void
      */
     setModelMaterial(model, modelName, partName, color) {
-      const meshNameList = this.uploadedModelMap[modelName].model.color.find(
+      const uploadModel = this.uploadedModelMap[modelName].model.color.find(
         (color) => color.name === partName
-      ).meshNameList;
+      );
+      const meshNameList = uploadModel ? uploadModel.meshNameList : [];
       model.traverse((o) => {
         let texture = new THREE.TextureLoader().load(
           this.getSrc(color.texture)
@@ -701,6 +702,8 @@ export default {
      * @returns void
      */
     init() {
+      console.log("Netlify build ID ");
+      console.log(process.env.BUILD_ID);
       container = this.$refs.container;
       scene = new THREE.Scene();
       scene.background = new THREE.Color(this.sceneBGColorCode);
