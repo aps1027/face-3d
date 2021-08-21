@@ -702,8 +702,6 @@ export default {
      * @returns void
      */
     init() {
-      console.log("Netlify build ID ");
-      console.log(process.env.BUILD_ID);
       container = this.$refs.container;
       scene = new THREE.Scene();
       scene.background = new THREE.Color(this.sceneBGColorCode);
