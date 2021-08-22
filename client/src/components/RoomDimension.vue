@@ -57,10 +57,17 @@
           </div>
           <div class="flex items-center justify-between">
             <button
-              class="w-full bg-teal-600 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline border border-teal-500"
+              class="w-6/12 mr-3 bg-teal-600 hover:bg-transparent hover:text-teal-600 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:shadow-outline border border-teal-500"
               type="submit"
             >
               Submit
+            </button>
+            <button
+              @click="clickCancel"
+              class="w-6/12 bg-transparent hover:bg-teal-500 text-teal-600 font-semibold hover:text-white py-2 px-4 border border-teal-500 hover:border-transparent rounded  focus:outline-none focus:shadow-outline"
+              type="button"
+            >
+              Cancel
             </button>
           </div>
           <p class="text-center text-gray-500 text-xs pt-4">
@@ -113,6 +120,14 @@ export default {
           length: this.roomLength,
         });
       }
+    },
+
+    /**
+     * Cancelling to submit.
+     * @returns void
+     */
+    clickCancel() {
+      this.$router.push('/');
     },
   },
 };

@@ -7,7 +7,7 @@
     <div class="pt-6">
       <router-link
         to="/room/create"
-        class="m-1 bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 border border-teal-700 rounded"
+        class="m-1 bg-teal-500 hover:bg-transparent hover:text-teal-600 text-white font-semibold py-2 px-4 border border-teal-600 rounded"
         >New room</router-link
       >
       <router-link

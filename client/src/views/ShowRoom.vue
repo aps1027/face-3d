@@ -17,7 +17,11 @@
         <div class="min-size">
           <img :src="latestRoom.imageUrl" alt="Room image" />
         </div>
-        <a :href="prepareEditRoute(latestRoom.id)" class="edit-btn">Edit&#8594;</a>
+        <a
+          :href="prepareEditRoute(latestRoom.id)"
+          class="edit-btn m-1 bg-transparent hover:bg-teal-500 text-teal-600 font-semibold hover:text-white py-1 px-4 border border-teal-500 hover:border-transparent rounded"
+          >Edit</a
+        >
       </div>
     </div>
   </div>
@@ -81,15 +85,8 @@ export default {
 }
 
 .edit-btn {
-  color: teal;
-  font-size: 18px;
   position: absolute;
-  height: 30px;
-  bottom: 5px;
-  cursor: pointer;
-  right: 20px;
-}
-.edit-btn:hover {
-  opacity: 0.5;
+  bottom: 10px;
+  right: 10px;
 }
 </style>
