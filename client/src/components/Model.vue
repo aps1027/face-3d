@@ -112,7 +112,7 @@
       </div>
     </div>
     <div
-      class="xs:w-12 xs:h-12 xs:p-1 xs:py-3 fix-save-btn save-btn text-center w-20 h-20 p-4 py-6 bg-transparent hover:bg-teal-500 text-teal-600 font-semibold hover:text-white border border-teal-500 hover:border-transparent"
+      class="xs:w-12 xs:h-12 xs:p-1 xs:py-3 fix-save-btn save-btn text-center w-20 h-20 p-4 py-6 bg-transparent hover:bg-teal-500 hover:text-white text-teal-600 font-semibold hover:text-white border border-teal-500 hover:border-transparent"
       @click="saveModel()"
     >
       SAVE
