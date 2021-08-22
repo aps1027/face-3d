@@ -21,14 +21,17 @@
               id="length"
               type="text"
               :class="!isRoomLengthValid ? 'border-red-500' : ''"
-              placeholder="Please input length in feet"
               v-model="roomLength"
             />
             <p
               v-if="!isRoomLengthValid"
               class="text-red-500 text-xs italic pt-1"
             >
-              Please input between {{ roomLengthRange[0] }} and
+              ※ Please input between {{ roomLengthRange[0] }} and
+              {{ roomLengthRange[1] }}.
+            </p>
+            <p v-if="isRoomLengthValid" class="text-xs italic pt-1">
+              ※ Please input between {{ roomLengthRange[0] }} and
               {{ roomLengthRange[1] }}.
             </p>
           </div>
@@ -44,14 +47,17 @@
               id="width"
               type="text"
               :class="!isRoomWidthValid ? 'border-red-500' : ''"
-              placeholder="Please input width in feet"
               v-model="roomWidth"
             />
             <p
               v-if="!isRoomWidthValid"
               class="text-red-500 text-xs italic pt-1"
             >
-              Please input between {{ roomWidthRange[0] }} and
+              ※ Please input between {{ roomWidthRange[0] }} and
+              {{ roomWidthRange[1] }}.
+            </p>
+            <p v-if="isRoomWidthValid" class="text-xs italic pt-1">
+              ※ Please input between {{ roomWidthRange[0] }} and
               {{ roomWidthRange[1] }}.
             </p>
           </div>
@@ -127,7 +133,7 @@ export default {
      * @returns void
      */
     clickCancel() {
-      this.$router.push('/');
+      this.$router.push("/");
     },
   },
 };
